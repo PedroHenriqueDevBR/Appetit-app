@@ -3,6 +3,8 @@ class AppString {
   String wellcome = 'Seja bem-vindo!';
   String wellcomeDescription = 'Nós sabemos a importância de estar sempre de barriga cheia e o quanto isso pode ajudar no seu dia.';
   String emailInput = 'Insira o seu e-mail aqui';
+  String email = 'E-mail';
+  String password = 'Senha';
   String passwordInput = 'Insira a sua senha aqui';
   String enterButton = 'ENTRAR';
 

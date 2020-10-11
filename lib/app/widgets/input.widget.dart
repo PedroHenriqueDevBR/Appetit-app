@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class InputWidget extends StatelessWidget {
+
   TextEditingController controller;
   String hint;
+  String label;
   List<TextInputFormatter> formatters;
   TextInputType type;
   bool isPassword;
   Function validator;
   bool readOnly;
   bool bordered;
+  String selectedLabel;
 
-  InputWidget(this.controller, this.hint, {this.formatters, this.type, this.isPassword = false, this.validator, this.readOnly=false, this.bordered=false});
+  InputWidget(this.controller, this.hint, {this.formatters, this.type, this.isPassword = false, this.validator, this.readOnly=false, this.bordered=false, this.label='', this.selectedLabel=''});
 
   @override
   Widget build(BuildContext context) {
