@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
-import 'package:maida_coffee_challenge/app/utils/string.utilx.dart';
+import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/views/LoginPage/login.page.dart';
 
 class AppWidget extends StatelessWidget {
@@ -24,12 +25,14 @@ class AppWidget extends StatelessWidget {
       title: _string.appName,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'OpenSans',
         primarySwatch: Colors.deepOrange,
         primaryColor: _color.primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         appBarTheme: coffeeAppBarTheme(),
       ),
-      home: LoginPage(),
+      initialRoute: AppRoute.LOGIN_ROUTE,
+      onGenerateRoute: AppRoute.generateRoute,
     );
   }
 
