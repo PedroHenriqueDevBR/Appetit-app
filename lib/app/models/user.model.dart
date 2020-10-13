@@ -15,14 +15,12 @@ class User {
 
   List<String> _getAllDatesFromDemands() {
     List<String> dates = [];
-
     for (Demand demand in this.demandList) {
       String demandDate = demand.date;
       if (dates.indexOf(demandDate) < 0) {
         dates.add(demandDate);
       }
     }
-
     return dates;
   }
 

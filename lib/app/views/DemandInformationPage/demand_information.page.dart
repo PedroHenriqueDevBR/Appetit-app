@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maida_coffee_challenge/app/models/demand.model.dart';
 import 'package:maida_coffee_challenge/app/models/food.model.dart';
 import 'package:maida_coffee_challenge/app/models/food_category.model.dart';
 import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
@@ -16,6 +17,7 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
   AppString _string = AppString();
   List<FoodCategory> _foods = FakeDataSingleton.instance.user.foodCategoryList;
   TextEditingController _txtSearch = TextEditingController();
+  Demand demandOnRequest = Demand.creator();
 
   String _formatMoney(double money) {
     String moneyString = money.toString();
@@ -57,14 +59,21 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
   }
 
   Widget _body() {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        children: [
-          _headerInformations(),
-          _foodListContainer(),
-        ],
-      ),
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              children: [
+                _headerInformations(),
+                _foodListContainer(),
+              ],
+            ),
+          ),
+        ),
+        _forwardButton(),
+      ],
     );
   }
 
@@ -167,5 +176,49 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
         );
       },
     );
+  }
+
+  Widget _forwardButton() {
+    if (demandOnRequest.foodList.length > 0) {
+      return Container(
+        padding: EdgeInsets.all(16),
+        color: _color.primaryColor,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '${_string.total} ${_formatMoney(demandOnRequest.getDemandTotal())}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Row(
+              children: [
+                Text(
+                  '${_string.goForward}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(width: 16),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 16,
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
+
   }
 }

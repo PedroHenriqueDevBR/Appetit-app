@@ -7,6 +7,7 @@ class AppString {
   String password = 'Senha';
   String passwordInput = 'Insira a sua senha aqui';
   String enterButton = 'Entrar';
+  String goForward = 'Avançar';
 
   String hello = 'Olá, ';
   String newDemand = 'fazer novo pedido';
@@ -28,6 +29,7 @@ class AppString {
   String myClients = 'Para quem você está vendendo?';
   String paindOrder = 'Para quem você está vendendo?';
   String finalizeDemand = 'finalizazr pedido';
+  String total = 'Total: R\$';
 
   String yes = 'Sim';
   String no = 'Não';

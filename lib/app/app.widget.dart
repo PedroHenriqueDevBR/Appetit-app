@@ -12,7 +12,7 @@ class AppWidget extends StatelessWidget {
   void changeNavigatorColor() {
     dynamic systemTheme = SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: _color.backgroundColor,
-      systemNavigationBarColor: _color.backgroundColor,
+      systemNavigationBarColor: Colors.black,
     );
     SystemChrome.setSystemUIOverlayStyle(systemTheme);
   }

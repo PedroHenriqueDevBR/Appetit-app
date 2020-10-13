@@ -1,4 +1,5 @@
 import 'package:maida_coffee_challenge/app/models/client.model.dart';
+import 'package:maida_coffee_challenge/app/models/food.model.dart';
 import 'package:maida_coffee_challenge/app/models/food_demand.model.dart';
 
 class Demand {
@@ -8,6 +9,10 @@ class Demand {
   Client client;
 
   Demand(this.date, this.paid, this.foodList, this.client);
+
+  Demand.creator() {
+    this.foodList = [];
+  }
 
   void addFood(FoodDemand food) {
     this.foodList.add(food);
@@ -21,7 +26,7 @@ class Demand {
     this.paid = true;
   }
 
-  copyWith(Client client){
+  copyWith(Client client) {
     return Demand(this.date, this.paid, this.foodList, client);
   }
 
@@ -33,5 +38,4 @@ class Demand {
     }
     return total;
   }
-
 }
