@@ -6,6 +6,9 @@ class CreateDemandButton extends StatelessWidget {
 
   AppColor _color = AppColor();
   AppString _string = AppString();
+  Function action;
+
+  CreateDemandButton(this.action);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class CreateDemandButton extends StatelessWidget {
       children: [
         Expanded(
           child: OutlineButton(
-            onPressed: () {},
+            onPressed: action,
             padding: EdgeInsets.all(12),
             child: Row(
               children: [

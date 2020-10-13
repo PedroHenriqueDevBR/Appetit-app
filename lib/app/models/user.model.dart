@@ -1,5 +1,6 @@
 import 'package:maida_coffee_challenge/app/models/demand.model.dart';
 import 'package:maida_coffee_challenge/app/models/demand_date.model.dart';
+import 'package:maida_coffee_challenge/app/models/food.model.dart';
 import 'package:maida_coffee_challenge/app/models/food_category.model.dart';
 import 'package:maida_coffee_challenge/app/models/food_demand.model.dart';
 
@@ -54,7 +55,7 @@ class User {
       DemandDate demandDate = DemandDate(date);
       double total = 0;
       this.demandList.forEach((demand) {
-        if (_searchMatch(search, demand, date)) {
+        if (_searchDemandMatch(search, demand, date)) {
           demandDate.addDemand(demand);
           total += demand.getDemandTotal();
         }
@@ -66,7 +67,7 @@ class User {
     return demandListWithDate;
   }
 
-  bool _searchMatch(String search, Demand demand, String date) {
+  bool _searchDemandMatch(String search, Demand demand, String date) {
     search = search.toLowerCase();
     String clientName = demand.client.name.toLowerCase();
     bool find = false;
@@ -80,6 +81,35 @@ class User {
     demand.foodList.forEach((FoodDemand foodDemand) {
       String foodName = foodDemand.food.name.toLowerCase();
       if (foodName.contains(search)) {
+        find = true;
+      }
+    });
+    return find;
+  }
+
+  List<FoodCategory> searchFoods(String search) {
+    List<FoodCategory> foodCatefories = [];
+
+    this.foodCategoryList.forEach((FoodCategory foodCategory) {
+      if (_searchFoodMatch(search, foodCategory)) {
+        foodCatefories.add(foodCategory);
+      }
+    });
+
+    return foodCatefories;
+  }
+
+  bool _searchFoodMatch(String search, FoodCategory foodCategory) {
+    search = search.toLowerCase();
+    String foodCategoryName = foodCategory.name.toLowerCase();
+    bool find = false;
+
+    if (foodCategoryName.contains(search)) {
+      find = true;
+    }
+    foodCategory.foodList.forEach((Food food) {
+      String foodName = food.name;
+      if (foodName.contains(search)){
         find = true;
       }
     });

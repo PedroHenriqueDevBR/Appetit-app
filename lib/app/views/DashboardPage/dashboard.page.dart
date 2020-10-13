@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:maida_coffee_challenge/app/models/demand.model.dart';
 import 'package:maida_coffee_challenge/app/models/demand_date.model.dart';
+import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
@@ -49,6 +50,10 @@ class _DashboardPageState extends State<DashboardPage> {
     }
   }
 
+  void goTocreateDemandPage() {
+    Navigator.pushNamed(context, AppRoute.DEMAND_INFORMATION_ROUTE);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +95,7 @@ class _DashboardPageState extends State<DashboardPage> {
           thickness: 2,
         ),
         SizedBox(height: 32),
-        CreateDemandButton(),
+        CreateDemandButton(goTocreateDemandPage),
         SizedBox(height: 32),
         SearchDemandField(_txtSearch, search),
         SizedBox(height: 32),
