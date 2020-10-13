@@ -7,14 +7,14 @@ class User {
   String email;
   String password;
   List<FoodCategory> foodCategoryList;
-  List<Demand> deamndList;
+  List<Demand> demandList;
 
-  User(this.name, this.email, this.password, this.foodCategoryList, this.deamndList);
+  User(this.name, this.email, this.password, this.foodCategoryList, this.demandList);
 
   List<String> _getAllDatesFromDemands() {
     List<String> dates = [];
 
-    for (Demand demand in this.deamndList) {
+    for (Demand demand in this.demandList) {
       String demandDate = demand.date;
       if (dates.indexOf(demandDate) < 0) {
         dates.add(demandDate);
@@ -32,12 +32,13 @@ class User {
       DemandDate demandDate = DemandDate(date);
       double total = 0;
 
-      for (Demand demand in this.deamndList) {
+
+      this.demandList.forEach((demand) {
         if (date == demand.date) {
           demandDate.addDemand(demand);
           total += demand.getDemandTotal();
         }
-      }
+      });
 
       demandDate.setTotal(total);
       demandListWithDate.add(demandDate);
