@@ -89,30 +89,40 @@ class User {
 
   List<FoodCategory> searchFoods(String search) {
     List<FoodCategory> foodCatefories = [];
+    if (search.isEmpty) {
+      return this.foodCategoryList;
+    }
 
     this.foodCategoryList.forEach((FoodCategory foodCategory) {
-      if (_searchFoodMatch(search, foodCategory)) {
-        foodCatefories.add(foodCategory);
+      FoodCategory foodResponse = _searchFoodMatch(search, foodCategory);
+      if (foodResponse != null) {
+        foodCatefories.add(foodResponse);
       }
     });
 
     return foodCatefories;
   }
 
-  bool _searchFoodMatch(String search, FoodCategory foodCategory) {
+  FoodCategory _searchFoodMatch(String search, FoodCategory foodCategory) {
     search = search.toLowerCase();
-    String foodCategoryName = foodCategory.name.toLowerCase();
-    bool find = false;
+    FoodCategory foodResponse;
+    List<Food> foods = [];
 
+    String foodCategoryName = foodCategory.name.toLowerCase();
     if (foodCategoryName.contains(search)) {
-      find = true;
+      return foodCategory;
     }
+
     foodCategory.foodList.forEach((Food food) {
       String foodName = food.name;
-      if (foodName.contains(search)){
-        find = true;
+      if (foodName.contains(search)) {
+        foods.add(food);
       }
     });
-    return find;
+    if (foods.length > 0) {
+      foodResponse = foodCategory.copyWith();
+      foodResponse.foodList = foods;
+    }
+    return foodResponse;
   }
 }

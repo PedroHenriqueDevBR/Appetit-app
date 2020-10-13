@@ -37,19 +37,20 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
 
   void _searchFood(String search) {
     setState(() {
-      if (search.isEmpty) {
-        _foods = FakeDataSingleton.instance.user.foodCategoryList;
-      } else {
-        _foods = FakeDataSingleton.instance.user.searchFoods(search);
-      }
+      _foods = [];
+      _foods = FakeDataSingleton.instance.user.searchFoods(search);
     });
+  }
+
+  void _closePage() {
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios),
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: _closePage),
       ),
       body: _body(),
     );

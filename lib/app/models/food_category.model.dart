@@ -14,4 +14,8 @@ class FoodCategory {
     return this.foodList;
   }
 
+  FoodCategory copyWith() {
+    return FoodCategory(this.name, this.foodList);
+  }
+
 }
