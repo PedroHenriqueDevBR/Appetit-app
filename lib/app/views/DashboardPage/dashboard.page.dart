@@ -17,6 +17,7 @@ class _DashboardPageState extends State<DashboardPage> {
   AppColor _color = AppColor();
   AppString _string = AppString();
   TextEditingController _txtSearch = TextEditingController();
+  List<DemandDate> demandsWithDate = FakeDataSingleton.instance.user.getAllDemands();
 
   String _formatMoney(double money) {
     String moneyString = money.toString();
@@ -34,6 +35,18 @@ class _DashboardPageState extends State<DashboardPage> {
       }
     }
     return moneyString;
+  }
+
+  void search(String value) {
+    if (value.isEmpty) {
+      setState(() {
+        demandsWithDate = FakeDataSingleton.instance.user.getAllDemands();
+      });
+    } else {
+      setState(() {
+        demandsWithDate = FakeDataSingleton.instance.user.searchDemands(value);
+      });
+    }
   }
 
   @override
@@ -79,14 +92,13 @@ class _DashboardPageState extends State<DashboardPage> {
         SizedBox(height: 32),
         CreateDemandButton(),
         SizedBox(height: 32),
-        SearchDemandField(_txtSearch),
+        SearchDemandField(_txtSearch, search),
         SizedBox(height: 32),
       ],
     );
   }
 
   Widget _demandListContainer() {
-    List<DemandDate> demandsWithDate = FakeDataSingleton.instance.user.getAllDemands();
     return Container(
       child: ListView.builder(
         itemCount: demandsWithDate.length,

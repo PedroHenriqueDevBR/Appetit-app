@@ -13,8 +13,9 @@ class InputWidget extends StatelessWidget {
   bool readOnly;
   bool bordered;
   String selectedLabel;
+  Function onChangeAction = (value){};
 
-  InputWidget(this.controller, this.hint, {this.formatters, this.type, this.isPassword = false, this.validator, this.readOnly=false, this.bordered=false, this.label='', this.selectedLabel=''});
+  InputWidget(this.controller, this.hint, {this.formatters, this.type, this.isPassword = false, this.validator, this.readOnly=false, this.bordered=false, this.label='', this.selectedLabel='', this.onChangeAction});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +28,7 @@ class InputWidget extends StatelessWidget {
       inputFormatters: formatters,
       readOnly: readOnly,
       style: TextStyle(color: Colors.black, decorationColor: Colors.black, fontSize: 17),
+      onChanged: onChangeAction,
       decoration: InputDecoration(
         labelText: bordered ? hint : null,
         hintText: hint,

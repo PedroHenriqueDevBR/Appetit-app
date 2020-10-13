@@ -8,8 +8,9 @@ class SearchDemandField extends StatelessWidget {
   AppString _string = AppString();
   AppColor _color = AppColor();
   TextEditingController _txtSearch;
+  Function changeAction = (value){};
 
-  SearchDemandField(this._txtSearch);
+  SearchDemandField(this._txtSearch, this.changeAction);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class SearchDemandField extends StatelessWidget {
             children: [
               Icon(Icons.search, color: _color.primaryColor,),
               SizedBox(width: 8),
-              Expanded(child: InputWidget(_txtSearch, _string.search)),
+              Expanded(child: InputWidget(_txtSearch, _string.search, onChangeAction: changeAction,)),
             ],
           ),
           Divider(color: Colors.black,),
