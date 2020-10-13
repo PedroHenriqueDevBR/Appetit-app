@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/views/LoginPage/box.widget.dart';
@@ -12,10 +13,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   AppColor _color = AppColor();
-
   AppString _string = AppString();
   TextEditingController _txtMail = new TextEditingController();
   TextEditingController _txtPassword = new TextEditingController();
+
+  void _goToDashboardPage(){
+    Navigator.pushNamed(context, AppRoute.DASHBOARD_ROUTE);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
       padding: EdgeInsets.symmetric(vertical: 64, horizontal: 16),
       width: MediaQuery.of(context).size.width,
       child: Image.asset(
-        'assets/images/logo.jpg',
+        'assets/images/app_logo.png',
         width: 200,
         height: 200,
       ),
@@ -94,7 +98,9 @@ class _LoginPageState extends State<LoginPage> {
         ),
         BoxWidget(),
         BoxWidget(),
-        ButtonWidget(() {}, _string.enterButton),
+        ButtonWidget(() {
+          _goToDashboardPage();
+        }, _string.enterButton),
       ],
     );
   }

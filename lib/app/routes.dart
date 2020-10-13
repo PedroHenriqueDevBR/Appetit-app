@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maida_coffee_challenge/app/views/DashboardPage/dashboard.page.dart';
 import 'package:maida_coffee_challenge/app/views/LoginPage/login.page.dart';
 
 class AppRoute {
@@ -12,6 +13,10 @@ class AppRoute {
       case LOGIN_ROUTE:
         return MaterialPageRoute(
           builder: (_) => LoginPage(),
+        );
+      case DASHBOARD_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => DashboardPage(),
         );
       default:
         return MaterialPageRoute(

@@ -6,12 +6,13 @@ class AppString {
   String email = 'E-mail';
   String password = 'Senha';
   String passwordInput = 'Insira a sua senha aqui';
-  String enterButton = 'ENTRAR';
+  String enterButton = 'Entrar';
 
   String hello = 'Olá, ';
   String newDemand = 'fazer novo pedido';
   String search = 'Digite a sua busca aqui';
-  String saleDay = ', você já vendeu ';
+  String inDay = 'Em';
+  String saleDay = 'você vendeu R\$';
 
   String demandInfo = 'Informações para o pedido';
   String fillFields = 'Preencha as informações abaixo para concluir o pedido.';

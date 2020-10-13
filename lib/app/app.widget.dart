@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
-import 'package:maida_coffee_challenge/app/views/LoginPage/login.page.dart';
 
 class AppWidget extends StatelessWidget {
 
@@ -40,7 +39,7 @@ class AppWidget extends StatelessWidget {
     return AppBarTheme(
       elevation: 0,
       color: _color.backgroundColor,
-      iconTheme: IconThemeData(color: Colors.black),
+      iconTheme: IconThemeData(color: _color.primaryColor),
       actionsIconTheme: IconThemeData(color: Colors.black),
     );
   }

@@ -1,0 +1,31 @@
+import 'package:flutter/material.dart';
+import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
+import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
+import 'package:maida_coffee_challenge/app/widgets/input.widget.dart';
+
+class SearchDemandField extends StatelessWidget {
+
+  AppString _string = AppString();
+  AppColor _color = AppColor();
+  TextEditingController _txtSearch;
+
+  SearchDemandField(this._txtSearch);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Icon(Icons.search, color: _color.primaryColor,),
+              SizedBox(width: 8),
+              Expanded(child: InputWidget(_txtSearch, _string.search)),
+            ],
+          ),
+          Divider(color: Colors.black,),
+        ],
+      ),
+    );
+  }
+}

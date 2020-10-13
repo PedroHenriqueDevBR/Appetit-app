@@ -23,9 +23,9 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/logo.jpg
     - assets/images/app_logo.png
     - assets/images/chef.png
+    - assets/images/avatar.png
 
   fonts:
     - family: OpenSans
