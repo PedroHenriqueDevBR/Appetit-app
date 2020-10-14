@@ -11,16 +11,17 @@ class FakeDataSingleton {
   User user;
 
   FakeDataSingleton._() {
+    String imagePathBase = 'assets/images/';
     List<FoodCategory> categories = [
       FoodCategory('Cuscuz', [
-        Food('Cuscuz simples', 'milho ou arroz', 2.25, ['milho', 'arroz']),
-        Food('Cuscuz completo', 'milho ou arroz', 2.25, ['milho', 'arroz'])
+        Food('Cuscuz simples', 'milho ou arroz', 2.25, ['milho', 'arroz'], '${imagePathBase}cuscuz_simples.png'),
+        Food('Cuscuz completo', 'milho ou arroz', 2.25, ['milho', 'arroz'], '${imagePathBase}cuscuz_completo.png')
       ]),
       FoodCategory('Pães', [
-        Food('Pão caseiro', '', 2.25, []),
-        Food('Pão caseiro completo', '', 3.25, []),
-        Food('Lingua de sogra (pq.)', '', 2.0, []),
-        Food('Lingua de sogra (gr.)', '', 3.0, [])
+        Food('Pão caseiro', '', 2.25, [], '${imagePathBase}pao_caseiro.png'),
+        Food('Pão caseiro completo', '', 3.25, [], '${imagePathBase}pao_caseiro_completo.png'),
+        Food('Lingua de sogra (pq.)', '', 2.0, [], '${imagePathBase}lingua_sogra_pq.png'),
+        Food('Lingua de sogra (gr.)', '', 3.0, [], '${imagePathBase}lingua_sogra_gr.png')
       ])
     ];
 
@@ -29,24 +30,24 @@ class FakeDataSingleton {
           '23/10/2020',
           true,
           [
-            FoodDemand(Food('Cuscuz simples', 'milho ou arroz', 2.25, ['milho', 'arroz']), 1, 'Cuscuz com calabresa', ''),
-            FoodDemand(Food('Cuscuz simples', 'milho ou arroz', 2.25, ['milho', 'arroz']), 1, 'Cuscuz com calabresa', ''),
+            FoodDemand(Food('Cuscuz simples', 'milho ou arroz', 2.25, ['milho', 'arroz'], '${imagePathBase}cuscuz_simples.png'), 1, 'Cuscuz com calabresa', ''),
+            FoodDemand(Food('Cuscuz simples', 'milho ou arroz', 2.25, ['milho', 'arroz'], '${imagePathBase}cuscuz_simples.png'), 1, 'Cuscuz com calabresa', ''),
           ],
           Client('Hanna Montana', 'assets/images/avatar.png')),
       Demand(
           '23/10/2020',
           true,
           [
-            FoodDemand(Food('Cuscuz completo', 'milho ou arroz', 2.25, ['milho', 'arroz']), 2, 'arroz', ''),
-            FoodDemand(Food('Pão de queijo', '', 2.25, []), 2, 'Salgado', '')
+            FoodDemand(Food('Cuscuz completo', 'milho ou arroz', 2.25, ['milho', 'arroz'], '${imagePathBase}cuscuz_completo.png'), 2, 'arroz', ''),
+            FoodDemand(Food('Pão de queijo', '', 2.25, [], '${imagePathBase}pao_caseiro.png'), 2, 'Salgado', '')
           ],
           Client('Pablo Alvares', 'assets/images/avatar.png')),
       Demand(
         '23/10/2020',
         true,
         [
-          FoodDemand(Food('Misto quente', '', 2.25, ['milho', 'arroz']), 2, 'arroz', ''),
-          FoodDemand(Food('Pão de queijo', '', 2.25, []), 2, 'Salgado', '')
+          FoodDemand(Food('Misto quente', '', 2.25, ['milho', 'arroz'], '${imagePathBase}misto_quente.png'), 2, 'arroz', ''),
+          FoodDemand(Food('Pão de queijo', '', 2.25, [], '${imagePathBase}pao_caseiro.png'), 2, 'Salgado', '')
         ],
         Client('Andreia Barros', 'assets/images/avatar.png'),
       ),
@@ -54,8 +55,8 @@ class FakeDataSingleton {
           '22/10/2020',
           true,
           [
-            FoodDemand(Food('Cuscuz completo', 'milho ou arroz', 2.25, ['milho', 'arroz']), 1, 'arroz', ''),
-            FoodDemand(Food('Pão de queijo', '', 2.25, []), 1, 'Salgado', '')
+            FoodDemand(Food('Cuscuz completo', 'milho ou arroz', 2.25, ['milho', 'arroz'], '${imagePathBase}cuscuz_completo.png'), 1, 'arroz', ''),
+            FoodDemand(Food('Pão de queijo', '', 2.25, [], '${imagePathBase}pao_caseiro.png'), 1, 'Salgado', '')
           ],
           Client('Pablo Alvares', 'assets/images/avatar.png'))
     ];

@@ -39,4 +39,22 @@ class AppString {
   String doneDemand = 'Pedido realizado!';
   String goToHomePage = 'voltar para a página inicial';
 
+  String formatMoney(double money) {
+    String moneyString = money.toString();
+    List<String> moneySplited = moneyString.split('.');
+
+    if (moneySplited.length == 0) {
+      moneyString = '0,00';
+    } else if (moneySplited.length == 1) {
+      moneyString = moneySplited[0] + ',00';
+    } else {
+      if (moneySplited[1].length == 1) {
+        moneyString = moneySplited[0] + ',' + moneySplited[1] + '0';
+      } else {
+        moneyString = moneyString.replaceAll('.', ',');
+      }
+    }
+    return moneyString;
+  }
+
 }

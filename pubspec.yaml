@@ -26,6 +26,13 @@ flutter:
     - assets/images/app_logo.png
     - assets/images/chef.png
     - assets/images/avatar.png
+    - assets/images/cuscuz_simples.png
+    - assets/images/cuscuz_completo.png
+    - assets/images/lingua_sogra_pq.png
+    - assets/images/lingua_sogra_gr.png
+    - assets/images/pao_caseiro.png
+    - assets/images/pao_caseiro_completo.png
+    - assets/images/misto_quente.png
 
   fonts:
     - family: OpenSans

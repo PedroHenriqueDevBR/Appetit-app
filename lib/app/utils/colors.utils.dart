@@ -6,4 +6,5 @@ class AppColor {
   Color primaryDarkColor = Color(0XFFe57a1f);
   Color secondaryColor = Color(0XFFB8CC3B);
   Color progressIndicatorColor = Color.fromRGBO(0, 0, 0, 0.08);
+  Color shadowColor = Color.fromRGBO(0, 0, 0, 0.04);
 }
