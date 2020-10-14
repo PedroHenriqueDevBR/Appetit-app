@@ -41,7 +41,7 @@ class FoodItemDescription extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: _color.backgroundColor,
-        backgroundImage: AssetImage('assets/images/avatar.png'),
+        backgroundImage: AssetImage(food.foodImage),
       ),
       trailing: Text(
         'R\$ ${_string.formatMoney(food.price)}',

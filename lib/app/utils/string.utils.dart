@@ -24,6 +24,7 @@ class AppString {
   String options = 'Opções';
   String optionsDescription = 'Escolha uma das opções de massas disponíveis abaixo.';
   String observations = 'Observações';
+  String observationsInput = 'Deseja adicionar alguma obs.?';
   String add = 'Adicionar';
   String whichClient = 'Para quem você está vendendo?';
   String myClients = 'Para quem você está vendendo?';

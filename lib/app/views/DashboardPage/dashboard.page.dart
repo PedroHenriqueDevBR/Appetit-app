@@ -20,24 +20,6 @@ class _DashboardPageState extends State<DashboardPage> {
   TextEditingController _txtSearch = TextEditingController();
   List<DemandDate> demandsWithDate = FakeDataSingleton.instance.user.getAllDemands();
 
-  String _formatMoney(double money) {
-    String moneyString = money.toString();
-    List<String> moneySplited = moneyString.split('.');
-
-    if (moneySplited.length == 0) {
-      moneyString = '0,00';
-    } else if (moneySplited.length == 1) {
-      moneyString = moneySplited[0] + ',00';
-    } else {
-      if (moneySplited[1].length == 1) {
-        moneyString = moneySplited[0] + ',' + moneySplited[1] + '0';
-      } else {
-        moneyString = moneyString.replaceAll('.', ',');
-      }
-    }
-    return moneyString;
-  }
-
   void search(String value) {
     if (value.isEmpty) {
       setState(() {
@@ -122,7 +104,7 @@ class _DashboardPageState extends State<DashboardPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${_string.inDay} ${demandsWithDate[index].getSmallDate()} ${_string.saleDay} ${_formatMoney(demandsWithDate[index].total)}',
+          '${_string.inDay} ${demandsWithDate[index].getSmallDate()} ${_string.saleDay} ${_string.formatMoney(demandsWithDate[index].total)}',
           style: TextStyle(fontSize: 20),
         ),
         SizedBox(height: 16),
@@ -154,7 +136,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
               ),
               Text(
-                _formatMoney(demand.getDemandTotal()),
+                _string.formatMoney(demand.getDemandTotal()),
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
               ),
             ],

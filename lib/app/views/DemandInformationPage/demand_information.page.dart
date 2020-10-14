@@ -7,6 +7,7 @@ import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/views/DemandInformationPage/search_food_field.widget.dart';
+import 'package:maida_coffee_challenge/app/widgets/food_item_description.widget.dart';
 
 class DemandInformationPage extends StatefulWidget {
   @override
@@ -20,24 +21,6 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
   TextEditingController _txtSearch = TextEditingController();
   Demand demandOnRequest = Demand.creator();
 
-  String _formatMoney(double money) {
-    String moneyString = money.toString();
-    List<String> moneySplited = moneyString.split('.');
-
-    if (moneySplited.length == 0) {
-      moneyString = '0,00';
-    } else if (moneySplited.length == 1) {
-      moneyString = moneySplited[0] + ',00';
-    } else {
-      if (moneySplited[1].length == 1) {
-        moneyString = moneySplited[0] + ',' + moneySplited[1] + '0';
-      } else {
-        moneyString = moneyString.replaceAll('.', ',');
-      }
-    }
-    return moneyString;
-  }
-
   void _searchFood(String search) {
     setState(() {
       _foods = [];
@@ -48,22 +31,13 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
   void _closePage() {
     Navigator.pop(context);
   }
-  
-  void _selectFood(Food food) async {
-    await Navigator.pushNamed(context, AppRoute.SELECT_FOOD_ROUTE, arguments: food).then((food) {
-      if (food != null) {
-        setState(() {
-          this.demandOnRequest.addFood(food);
-        });
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: _closePage),
+        leading:
+            IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: _closePage),
       ),
       body: _body(),
     );
@@ -74,7 +48,6 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            padding: EdgeInsets.all(16),
             child: Column(
               children: [
                 _headerInformations(),
@@ -89,18 +62,22 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
   }
 
   Widget _headerInformations() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(_string.demandInfo, style: TextStyle(fontSize: 24, color: _color.primaryDarkColor)),
-        Divider(color: _color.secondaryColor, endIndent: 100, thickness: 2),
-        Text(_string.fillFields, style: TextStyle(fontSize: 16)),
-        SizedBox(height: 32),
-        _demandStatus(),
-        SizedBox(height: 32),
-        SearchFoodField(_txtSearch, _searchFood),
-        SizedBox(height: 32),
-      ],
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(_string.demandInfo,
+              style: TextStyle(fontSize: 24, color: _color.primaryDarkColor)),
+          Divider(color: _color.secondaryColor, endIndent: 100, thickness: 2),
+          Text(_string.fillFields, style: TextStyle(fontSize: 16)),
+          SizedBox(height: 32),
+          _demandStatus(),
+          SizedBox(height: 32),
+          SearchFoodField(_txtSearch, _searchFood),
+          SizedBox(height: 32),
+        ],
+      ),
     );
   }
 
@@ -110,7 +87,8 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
         Row(
           children: [
             Expanded(
-              child: Text(_string.whatSelling, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              child: Text(_string.whatSelling,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
             ),
             Text('1 de 3')
           ],
@@ -127,13 +105,19 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
 
   Widget _foodListContainer() {
     return Container(
-      child: ListView.builder(
+      child: ListView.separated(
+        separatorBuilder: (context, index) => Divider(
+          color: _color.progressIndicatorColor,
+        ),
         itemCount: _foods.length,
         physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          return _categoryList(context, _foods[index]);
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            child: _categoryList(context, _foods[index]),
+          );
         },
       ),
     );
@@ -155,43 +139,33 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
   }
 
   Widget _foodList(List<Food> foods) {
-    return ListView.separated(
-      separatorBuilder: (context, index) => Divider(),
+    return ListView.builder(
       itemCount: foods.length,
       physics: NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemBuilder: (context, index) {
         Food food = foods[index];
-        return _foodItem(food);
-      },
-    );
-  }
-
-  Widget _foodItem(Food food) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: _color.backgroundColor,
-        backgroundImage: AssetImage('assets/images/avatar.png'),
-      ),
-      trailing: Text(
-        'R\$ ${_formatMoney(food.price)}',
-        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-      ),
-      title: Text(
-        food.name,
-        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-      ),
-      subtitle: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Text(
-          'sd lkajsdhaljk shdfkjlas hdflkasjhdf jlk nashdfguawye fjhsadfg uisaftdg',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-      onTap: (){
-        _selectFood(food);
+        return Column(
+          children: [
+            FoodItemDescription(
+              food,
+              applyShadow: true,
+              action: () async {
+                await Navigator.pushNamed(context, AppRoute.SELECT_FOOD_ROUTE,
+                    arguments: food)
+                    .then((food) {
+                  if (food != null) {
+                    setState(() {
+                      this.demandOnRequest.addFood(food);
+                    });
+                  }
+                });
+              },
+            ),
+            SizedBox(height: 8),
+          ],
+        );
       },
     );
   }
@@ -206,7 +180,7 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${_string.total} ${_formatMoney(demandOnRequest.getDemandTotal())}',
+              '${_string.total} ${_string.formatMoney(demandOnRequest.getDemandTotal())}',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -237,6 +211,5 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
     } else {
       return Container();
     }
-
   }
 }
