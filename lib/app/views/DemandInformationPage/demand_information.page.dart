@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maida_coffee_challenge/app/models/demand.model.dart';
 import 'package:maida_coffee_challenge/app/models/food.model.dart';
 import 'package:maida_coffee_challenge/app/models/food_category.model.dart';
+import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
@@ -46,6 +47,16 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
 
   void _closePage() {
     Navigator.pop(context);
+  }
+  
+  void _selectFood(Food food) async {
+    await Navigator.pushNamed(context, AppRoute.SELECT_FOOD_ROUTE, arguments: food).then((food) {
+      if (food != null) {
+        setState(() {
+          this.demandOnRequest.addFood(food);
+        });
+      }
+    });
   }
 
   @override
@@ -152,28 +163,35 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         Food food = foods[index];
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundColor: _color.backgroundColor,
-            backgroundImage: AssetImage('assets/images/avatar.png'),
-          ),
-          trailing: Text(
-            'R\$ ${_formatMoney(food.price)}',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-          ),
-          title: Text(
-            food.name,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-          ),
-          subtitle: Container(
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-              'sd lkajsdhaljk shdfkjlas hdflkasjhdf jlk nashdfguawye fjhsadfg uisaftdg',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        );
+        return _foodItem(food);
+      },
+    );
+  }
+
+  Widget _foodItem(Food food) {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundColor: _color.backgroundColor,
+        backgroundImage: AssetImage('assets/images/avatar.png'),
+      ),
+      trailing: Text(
+        'R\$ ${_formatMoney(food.price)}',
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+      ),
+      title: Text(
+        food.name,
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+      ),
+      subtitle: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Text(
+          'sd lkajsdhaljk shdfkjlas hdflkasjhdf jlk nashdfguawye fjhsadfg uisaftdg',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      onTap: (){
+        _selectFood(food);
       },
     );
   }

@@ -59,9 +59,12 @@ class User {
         }
       });
 
-      demandDate.setTotal(total);
-      demandListWithDate.add(demandDate);
+      if (demandDate.demandlist.length > 0) {
+        demandDate.setTotal(total);
+        demandListWithDate.add(demandDate);
+      }
     }
+
     return demandListWithDate;
   }
 

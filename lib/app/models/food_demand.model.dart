@@ -8,6 +8,11 @@ class FoodDemand {
 
   FoodDemand(this.food, this.amount, this.observations, this.selectedOption);
 
+  FoodDemand.creator(Food food){
+    this.food = food;
+    this.amount = 0;
+  }
+
   double getTotalPrice(){
     double price = food.price;
     return price * amount;
