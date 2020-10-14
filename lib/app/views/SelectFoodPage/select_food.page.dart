@@ -27,6 +27,12 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
   }
 
   void _goBackAndReturnFoodSelected() {
+    _foodDemand.observations = _txtDescription.text;
+    print('Pedido realizado');
+    print('Lanche ${_foodDemand.food.name}');
+    print('Quantidade ${_foodDemand.amount}');
+    print('Observações ${_foodDemand.observations}');
+    print('opção selecionada ${_foodDemand.selectedOption}');
     Navigator.pop(context, _foodDemand);
   }
 
@@ -231,7 +237,7 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
           ),
         ],
       ),
-      onPressed: () {},
+      onPressed: _goBackAndReturnFoodSelected,
     );
   }
 

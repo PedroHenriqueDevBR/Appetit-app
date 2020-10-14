@@ -10,7 +10,7 @@ class FoodDemand {
 
   FoodDemand.creator(Food food){
     this.food = food;
-    this.amount = 0;
+    this.amount = 1;
   }
 
   double getTotalPrice(){
