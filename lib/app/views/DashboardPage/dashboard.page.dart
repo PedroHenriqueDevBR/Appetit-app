@@ -7,7 +7,7 @@ import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/views/DashboardPage/create_demand_button.widget.dart';
-import 'package:maida_coffee_challenge/app/views/DashboardPage/search_demand_field.widget.dart';
+import 'package:maida_coffee_challenge/app/widgets/search_field.widget.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -79,7 +79,7 @@ class _DashboardPageState extends State<DashboardPage> {
         SizedBox(height: 32),
         CreateDemandButton(goTocreateDemandPage),
         SizedBox(height: 32),
-        SearchDemandField(_txtSearch, search),
+        SearchField(_txtSearch, search),
         SizedBox(height: 32),
       ],
     );
