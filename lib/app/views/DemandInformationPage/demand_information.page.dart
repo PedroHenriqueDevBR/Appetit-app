@@ -8,6 +8,7 @@ import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/widgets/food_item_description.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/food_item_description_selected.widget.dart';
+import 'package:maida_coffee_challenge/app/widgets/header_information.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/search_field.widget.dart';
 
 class DemandInformationPage extends StatefulWidget {
@@ -34,7 +35,8 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
   }
 
   void _goToSelectProductPage() {
-    Navigator.pushNamed(context, AppRoute.LIST_CLIENTS_ROUTE, arguments: this._demandOnRequest);
+    Navigator.pushNamed(context, AppRoute.LIST_CLIENTS_ROUTE,
+        arguments: this._demandOnRequest);
   }
 
   @override
@@ -67,44 +69,13 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
   }
 
   Widget _headerInformations() {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(_string.demandInfo,
-              style: TextStyle(fontSize: 24, color: _color.primaryDarkColor)),
-          Divider(color: _color.secondaryColor, endIndent: 100, thickness: 2),
-          Text(_string.fillFields, style: TextStyle(fontSize: 16)),
-          SizedBox(height: 32),
-          _demandStatus(),
-          SizedBox(height: 32),
-          SearchField(_txtSearch, _searchFood),
-          SizedBox(height: 32),
-        ],
-      ),
-    );
-  }
-
-  Widget _demandStatus() {
-    return Column(
-      children: [
-        Row(
+    return HeaderInformationWidget(1,
+        child: Column(
           children: [
-            Expanded(
-              child: Text(_string.whatSelling,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-            ),
-            Text('1 de 3')
+            SearchField(_txtSearch, _searchFood),
+            SizedBox(height: 32),
           ],
-        ),
-        SizedBox(height: 8),
-        LinearProgressIndicator(
-          backgroundColor: _color.progressIndicatorColor,
-          value: 0.33,
-          valueColor: AlwaysStoppedAnimation<Color>(_color.primaryColor),
-        ),
-      ],
+        )
     );
   }
 

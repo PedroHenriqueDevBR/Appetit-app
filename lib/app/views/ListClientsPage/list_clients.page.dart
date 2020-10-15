@@ -5,6 +5,7 @@ import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/widgets/client_list_item.widget.dart';
+import 'package:maida_coffee_challenge/app/widgets/header_information.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/search_field.widget.dart';
 
 class ListClientsPage extends StatefulWidget {
@@ -104,44 +105,7 @@ class _ListClientsPageState extends State<ListClientsPage> {
   }
 
   Widget _headerInformations() {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(_string.demandInfo,
-              style: TextStyle(fontSize: 24, color: _color.primaryDarkColor)),
-          Divider(color: _color.secondaryColor, endIndent: 100, thickness: 2),
-          Text(_string.fillFields, style: TextStyle(fontSize: 16)),
-          SizedBox(height: 32),
-          _demandStatus(),
-          SizedBox(height: 32),
-          SearchField(_txtSearch, _searchClient),
-        ],
-      ),
-    );
-  }
-
-  Widget _demandStatus() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(_string.whatSelling,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-            ),
-            Text('2 de 3')
-          ],
-        ),
-        SizedBox(height: 8),
-        LinearProgressIndicator(
-          backgroundColor: _color.progressIndicatorColor,
-          value: 0.66,
-          valueColor: AlwaysStoppedAnimation<Color>(_color.primaryColor),
-        ),
-      ],
-    );
+    return HeaderInformationWidget(2, child: SearchField(_txtSearch, _searchClient),);
   }
 
   Widget _clientListContainer() {
