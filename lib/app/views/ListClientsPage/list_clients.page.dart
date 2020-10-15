@@ -23,6 +23,24 @@ class _ListClientsPageState extends State<ListClientsPage> {
   Demand _demandOnRequest;
   List<Client> _clients = [];
   List<Client> _presentationClients = [];
+  List<int> _selectedPositions = [];
+
+  void _togglePosition(int position) {
+    int index = _selectedPositions.indexOf(position);
+    if (index >= 0) {
+      setState(() {
+        _selectedPositions.removeAt(index);
+      });
+    } else {
+      setState(() {
+        _selectedPositions.add(position);
+      });
+    }
+  }
+
+  bool _clientAdded(int index) {
+    return _selectedPositions.indexOf(index) >= 0;
+  }
 
   void _goBack() {
     Navigator.pop(context);
@@ -154,7 +172,13 @@ class _ListClientsPageState extends State<ListClientsPage> {
         Client client = _presentationClients[index];
         return Column(
           children: [
-            ClientListItem(client),
+            ClientListItem(
+              client,
+              selected: _clientAdded(index),
+              action: () {
+                _togglePosition(index);
+              },
+            ),
             SizedBox(height: 8),
           ],
         );
@@ -163,7 +187,7 @@ class _ListClientsPageState extends State<ListClientsPage> {
   }
 
   Widget _forwardButton() {
-    if (_demandOnRequest.foodList.length > 0) {
+    if (_selectedPositions.length > 0) {
       return Container(
         padding: EdgeInsets.all(16),
         color: _color.primaryColor,
@@ -172,7 +196,9 @@ class _ListClientsPageState extends State<ListClientsPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${_string.total} ${_string.formatMoney(_demandOnRequest.getDemandTotal())}',
+              _selectedPositions.length == 1
+                  ? '${this._selectedPositions.length} ${_string.oneSelectedClient}'
+                  : '${this._selectedPositions.length} ${_string.manySelectedClients}',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

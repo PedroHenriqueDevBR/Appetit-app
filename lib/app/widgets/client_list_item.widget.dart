@@ -9,8 +9,9 @@ class ClientListItem extends StatelessWidget {
   AppString _string = AppString();
   Client client;
   Function action;
+  bool selected;
 
-  ClientListItem(this.client, {this.action});
+  ClientListItem(this.client, {this.action, this.selected=false});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ClientListItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 0),
       child: _foodItem(context),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: this.selected ? _color.primaryColor : Colors.white,
         border: Border.all(
           color: _color.shadowColor,
           width: 2,
@@ -44,7 +45,7 @@ class ClientListItem extends StatelessWidget {
       ),
       title: Text(
         client.name,
-        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: this.selected ? Colors.white : Colors.black),
       ),
       onTap: action,
     );
