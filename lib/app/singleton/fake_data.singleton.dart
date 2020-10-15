@@ -9,9 +9,17 @@ class FakeDataSingleton {
   static FakeDataSingleton _instance;
 
   User user;
+  List<Client> clients = [];
 
   FakeDataSingleton._() {
     String imagePathBase = 'assets/images/';
+
+    this.clients = [
+      Client('Justine Marshall', '${imagePathBase}avatar.png'),
+      Client('Bairan Frootran', '${imagePathBase}avatar.png'),
+      Client('Pedro Henrique', '${imagePathBase}avatar.png'),
+    ];
+
     List<FoodCategory> categories = [
       FoodCategory('Cuscuz', [
         Food('Cuscuz simples', 'milho ou arroz', 2.25, ['milho', 'arroz'], '${imagePathBase}cuscuz_simples.png'),
@@ -61,7 +69,7 @@ class FakeDataSingleton {
           Client('Pablo Alvares', 'assets/images/avatar.png'))
     ];
 
-    user = User('Alessandra', 'login@email.com', '12345678', categories, demands);
+    this.user = User('Alessandra', 'login@email.com', '12345678', categories, demands);
   }
 
 

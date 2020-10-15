@@ -6,8 +6,9 @@ import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
-import 'package:maida_coffee_challenge/app/views/DemandInformationPage/search_food_field.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/food_item_description.widget.dart';
+import 'package:maida_coffee_challenge/app/widgets/food_item_description_selected.widget.dart';
+import 'package:maida_coffee_challenge/app/widgets/search_field.widget.dart';
 
 class DemandInformationPage extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
   AppString _string = AppString();
   List<FoodCategory> _foods = FakeDataSingleton.instance.user.foodCategoryList;
   TextEditingController _txtSearch = TextEditingController();
-  Demand demandOnRequest = Demand.creator();
+  Demand _demandOnRequest = Demand.creator();
 
   void _searchFood(String search) {
     setState(() {
@@ -30,6 +31,10 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
 
   void _closePage() {
     Navigator.pop(context);
+  }
+
+  void _goToSelectProductPage() {
+    Navigator.pushNamed(context, AppRoute.LIST_CLIENTS_ROUTE, arguments: this._demandOnRequest);
   }
 
   @override
@@ -74,7 +79,7 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
           SizedBox(height: 32),
           _demandStatus(),
           SizedBox(height: 32),
-          SearchFoodField(_txtSearch, _searchFood),
+          SearchField(_txtSearch, _searchFood),
           SizedBox(height: 32),
         ],
       ),
@@ -148,21 +153,9 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
         Food food = foods[index];
         return Column(
           children: [
-            FoodItemDescription(
-              food,
-              applyShadow: true,
-              action: () async {
-                await Navigator.pushNamed(context, AppRoute.SELECT_FOOD_ROUTE,
-                    arguments: food)
-                    .then((food) {
-                  if (food != null) {
-                    setState(() {
-                      this.demandOnRequest.addFood(food);
-                    });
-                  }
-                });
-              },
-            ),
+            this._demandOnRequest.foodAdded(food)
+                ? _selectedFood(food)
+                : _unselectedFood(food),
             SizedBox(height: 8),
           ],
         );
@@ -170,43 +163,82 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
     );
   }
 
+  Widget _selectedFood(Food food) {
+    return FoodItemDescriptionSelected(
+      food,
+      applyShadow: true,
+      action: () async {
+        await Navigator.pushNamed(context, AppRoute.SELECT_FOOD_ROUTE,
+                arguments: food)
+            .then((food) {
+          if (food != null) {
+            setState(() {
+              this._demandOnRequest.addFood(food);
+            });
+          }
+        });
+      },
+    );
+  }
+
+  Widget _unselectedFood(Food food) {
+    return FoodItemDescription(
+      food,
+      applyShadow: true,
+      action: () async {
+        await Navigator.pushNamed(context, AppRoute.SELECT_FOOD_ROUTE,
+                arguments: food)
+            .then((food) {
+          if (food != null) {
+            setState(() {
+              this._demandOnRequest.addFood(food);
+            });
+          }
+        });
+      },
+    );
+  }
+
   Widget _forwardButton() {
-    if (demandOnRequest.foodList.length > 0) {
-      return Container(
-        padding: EdgeInsets.all(16),
-        color: _color.primaryColor,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              '${_string.total} ${_string.formatMoney(demandOnRequest.getDemandTotal())}',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Row(
-              children: [
-                Text(
-                  '${_string.goForward}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(width: 16),
-                Icon(
-                  Icons.arrow_forward_ios,
+    if (_demandOnRequest.foodList.length > 0) {
+      return GestureDetector(
+        child: Container(
+          padding: EdgeInsets.all(16),
+          color: _color.primaryColor,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '${_string.total} ${_string.formatMoney(_demandOnRequest.getDemandTotal())}',
+                style: TextStyle(
                   color: Colors.white,
-                  size: 16,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    '${_string.goForward}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
+        onTap: _goToSelectProductPage,
       );
     } else {
       return Container();

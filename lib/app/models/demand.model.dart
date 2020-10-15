@@ -38,4 +38,13 @@ class Demand {
     }
     return total;
   }
+
+  bool foodAdded(Food foodVerifier) {
+    this.foodList.forEach((FoodDemand foodDemand) {
+      if (foodDemand.food == foodVerifier) {
+        return true;
+      }
+    });
+    return false;
+  }
 }

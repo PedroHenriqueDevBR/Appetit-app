@@ -27,7 +27,7 @@ class AppString {
   String observationsInput = 'Deseja adicionar alguma obs.?';
   String add = 'Adicionar';
   String whichClient = 'Para quem você está vendendo?';
-  String myClients = 'Para quem você está vendendo?';
+  String myClients = 'Meus clientes';
   String paindOrder = 'Para quem você está vendendo?';
   String finalizeDemand = 'finalizazr pedido';
   String total = 'Total: R\$';
