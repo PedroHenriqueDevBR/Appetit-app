@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
@@ -32,6 +33,15 @@ class AppWidget extends StatelessWidget {
       ),
       initialRoute: AppRoute.LOGIN_ROUTE,
       onGenerateRoute: AppRoute.generateRoute,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'),
+        Locale('pt', 'BR'),
+      ],
+
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maida_coffee_challenge/app/views/DashboardPage/dashboard.page.dart';
 import 'package:maida_coffee_challenge/app/views/DemandInformationPage/demand_information.page.dart';
+import 'package:maida_coffee_challenge/app/views/EndPage/end.page.dart';
 import 'package:maida_coffee_challenge/app/views/ListClientsPage/list_clients.page.dart';
 import 'package:maida_coffee_challenge/app/views/LoginPage/login.page.dart';
 import 'package:maida_coffee_challenge/app/views/SelectFoodPage/select_food.page.dart';
@@ -11,6 +12,7 @@ class AppRoute {
   static const String DEMAND_INFORMATION_ROUTE = '/demand_information_route';
   static const String SELECT_FOOD_ROUTE = '/select_food_route';
   static const String LIST_CLIENTS_ROUTE = '/list_clients_route';
+  static const String END_ROUTE = '/end_route';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     dynamic args = settings.arguments;
@@ -35,6 +37,10 @@ class AppRoute {
       case LIST_CLIENTS_ROUTE:
         return MaterialPageRoute(
           builder: (_) => ListClientsPage(args),
+        );
+      case END_ROUTE:
+        return MaterialPageRoute(
+          builder: (_) => EndPage(),
         );
       default:
         return MaterialPageRoute(

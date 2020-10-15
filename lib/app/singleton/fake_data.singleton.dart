@@ -72,7 +72,9 @@ class FakeDataSingleton {
     this.user = User('Alessandra', 'login@email.com', '12345678', categories, demands);
   }
 
-
+  void addDemand(Demand demand) {
+    this.user.demandList.add(demand);
+  }
 
   static get instance {
     _instance ??= FakeDataSingleton._();

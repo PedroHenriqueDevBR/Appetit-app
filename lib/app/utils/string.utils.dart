@@ -34,6 +34,7 @@ class AppString {
   String manySelectedClients = 'clientes selecionados';
   String total = 'Total: R\$';
 
+  String confirm = 'Confirmar';
   String yes = 'Sim';
   String no = 'Não';
   String whitchDate = 'Em que data o pedido foi realizado?';
@@ -58,6 +59,19 @@ class AppString {
       }
     }
     return moneyString;
+  }
+
+  String formatDate(DateTime date) {
+    String response = '${_formatDayAndMonth(date.day.toString())}/${_formatDayAndMonth(date.month.toString())}/${date.year}';
+    return response;
+  }
+
+  String _formatDayAndMonth(String date) {
+    if (date.length == 1) {
+      return '0${date}';
+    } else {
+      return date;
+    }
   }
 
 }

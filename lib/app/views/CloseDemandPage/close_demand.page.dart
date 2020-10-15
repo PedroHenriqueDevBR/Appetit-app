@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:maida_coffee_challenge/app/models/client.model.dart';
 import 'package:maida_coffee_challenge/app/models/demand.model.dart';
+import 'package:maida_coffee_challenge/app/routes.dart';
+import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
+import 'package:maida_coffee_challenge/app/widgets/button.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/header_information.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/shadow_container.widget.dart';
 
@@ -21,17 +24,27 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
   AppString _string = AppString();
   Demand _demand;
   List<Client> _clients;
-  bool _paid;
-  DateTime _dateTime;
 
   void _togglePaid(value) {
     setState(() {
-      _paid = value;
+      this._demand.paid = value;
     });
   }
 
   void _goBack() {
     Navigator.pop(context);
+  }
+
+  void _registerDemands() {
+    for (Client client in this._clients) {
+      Demand demand = this._demand.copyWith(client);
+      FakeDataSingleton.instance.addDemand(demand);
+    }
+  }
+  
+  void _goToEndPage() {
+    this._registerDemands();
+    Navigator.pushReplacementNamed(context, AppRoute.END_ROUTE);
   }
 
   @override
@@ -65,6 +78,10 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
             ),
           ),
         ),
+        Container(
+          padding: EdgeInsets.all(16),
+          child: ButtonWidget(_goToEndPage, _string.finalizeDemand),
+        ),
       ],
     );
   }
@@ -97,7 +114,7 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
             child: ListTile(
               leading: Icon(Icons.date_range),
               title: Text(
-                  _dateTime == null ? _string.chooseDate : _dateTime.toString()
+                  this._demand.date == null ? this._string.chooseDate : this._demand.date
               ),
               trailing: Icon(
                 Icons.arrow_forward_ios,
@@ -112,13 +129,15 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
               firstDate: DateTime(DateTime.now().year - 10),
               lastDate: DateTime(DateTime.now().year + 10),
               cancelText: '',
-              confirmText: 'Confirmar',
-              // locale: Locale.fromSubtags(languageCode: 'br'),
-            ).then((date) {
-              setState(() {
-                this._dateTime = date;
-              });
-            });
+              confirmText: _string.confirm,
+              locale: Locale("pt", "BR"),
+            ).then(
+              (date) {
+                setState(() {
+                  this._demand.date = _string.formatDate(date);
+                });
+              },
+            );
           },
         ),
       ],
@@ -144,10 +163,10 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
     return Column(
       children: [
         ShadowContainerWidget(
-          child: _radio(_string.yes, true, _paid, _togglePaid),
+          child: _radio(_string.yes, true, this._demand.paid, _togglePaid),
         ),
         ShadowContainerWidget(
-          child: _radio(_string.no, false, _paid, _togglePaid),
+          child: _radio(_string.no, false, this._demand.paid, _togglePaid),
         ),
       ],
     );
