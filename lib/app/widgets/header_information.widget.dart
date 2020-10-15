@@ -7,8 +7,9 @@ class HeaderInformationWidget extends StatelessWidget {
   AppString _string = AppString();
   Widget child;
   int step;
+  String statusTitle;
 
-  HeaderInformationWidget(this.step, {this.child});
+  HeaderInformationWidget(this.step, this.statusTitle, {this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,9 @@ class HeaderInformationWidget extends StatelessWidget {
           Text(_string.fillFields, style: TextStyle(fontSize: 16)),
           SizedBox(height: 32),
           _statusInformation(),
-          SizedBox(height: 32),
+          this.child != null
+              ? SizedBox(height: 32)
+              : Container(),
           this.child != null
               ? this.child
               : Container(),
@@ -38,7 +41,7 @@ class HeaderInformationWidget extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: Text(_string.whatSelling,
+              child: Text(statusTitle,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
             ),
             Text('${this.step} de 3')

@@ -28,8 +28,8 @@ class AppString {
   String add = 'Adicionar';
   String whichClient = 'Para quem você está vendendo?';
   String myClients = 'Meus clientes';
-  String paindOrder = 'Para quem você está vendendo?';
-  String finalizeDemand = 'finalizazr pedido';
+  String paindOrder = 'O cliente já pagou?';
+  String finalizeDemand = 'finalizar pedido';
   String oneSelectedClient = 'clientes selecionado';
   String manySelectedClients = 'clientes selecionados';
   String total = 'Total: R\$';

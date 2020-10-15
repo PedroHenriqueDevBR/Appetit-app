@@ -4,6 +4,7 @@ import 'package:maida_coffee_challenge/app/models/demand.model.dart';
 import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
+import 'package:maida_coffee_challenge/app/views/CloseDemandPage/close_demand.page.dart';
 import 'package:maida_coffee_challenge/app/widgets/client_list_item.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/header_information.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/search_field.widget.dart';
@@ -45,6 +46,20 @@ class _ListClientsPageState extends State<ListClientsPage> {
 
   void _goBack() {
     Navigator.pop(context);
+  }
+
+  void _goToCloseDemandPage() {
+    List<Client> clients = [];
+    for (int i = 0; i < this._clients.length; i++) {
+      if (this._selectedPositions.contains(i)) {
+        clients.add(this._clients[i]);
+      }
+    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CloseDemandPage(_demandOnRequest, clients),
+        ));
   }
 
   void _searchClient(String keyword) {
@@ -105,7 +120,11 @@ class _ListClientsPageState extends State<ListClientsPage> {
   }
 
   Widget _headerInformations() {
-    return HeaderInformationWidget(2, child: SearchField(_txtSearch, _searchClient),);
+    return HeaderInformationWidget(
+      2,
+      _string.whichClient,
+      child: SearchField(_txtSearch, _searchClient),
+    );
   }
 
   Widget _clientListContainer() {
@@ -152,43 +171,46 @@ class _ListClientsPageState extends State<ListClientsPage> {
 
   Widget _forwardButton() {
     if (_selectedPositions.length > 0) {
-      return Container(
-        padding: EdgeInsets.all(16),
-        color: _color.primaryColor,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              _selectedPositions.length == 1
-                  ? '${this._selectedPositions.length} ${_string.oneSelectedClient}'
-                  : '${this._selectedPositions.length} ${_string.manySelectedClients}',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Row(
-              children: [
-                Text(
-                  '${_string.goForward}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(width: 16),
-                Icon(
-                  Icons.arrow_forward_ios,
+      return GestureDetector(
+        child: Container(
+          padding: EdgeInsets.all(16),
+          color: _color.primaryColor,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _selectedPositions.length == 1
+                    ? '${this._selectedPositions.length} ${_string.oneSelectedClient}'
+                    : '${this._selectedPositions.length} ${_string.manySelectedClients}',
+                style: TextStyle(
                   color: Colors.white,
-                  size: 16,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    '${_string.goForward}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
+        onTap: _goToCloseDemandPage,
       );
     } else {
       return Container();

@@ -69,13 +69,15 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
   }
 
   Widget _headerInformations() {
-    return HeaderInformationWidget(1,
-        child: Column(
-          children: [
-            SearchField(_txtSearch, _searchFood),
-            SizedBox(height: 32),
-          ],
-        )
+    return HeaderInformationWidget(
+      1,
+      _string.whatSelling,
+      child: Column(
+        children: [
+          SearchField(_txtSearch, _searchFood),
+          SizedBox(height: 32),
+        ],
+      ),
     );
   }
 
