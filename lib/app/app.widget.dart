@@ -41,7 +41,6 @@ class AppWidget extends StatelessWidget {
         Locale('en'),
         Locale('pt', 'BR'),
       ],
-
     );
   }
 

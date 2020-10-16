@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:maida_coffee_challenge/app/routes.dart';
+import 'package:maida_coffee_challenge/app/stores/login.store.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/views/LoginPage/box.widget.dart';
@@ -17,9 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _txtMail = new TextEditingController();
   TextEditingController _txtPassword = new TextEditingController();
 
-  void _goToDashboardPage(){
-    Navigator.pushNamed(context, AppRoute.DASHBOARD_ROUTE);
-  }
+  LoginStore _loginStore = LoginStore();
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,9 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             _logoWidget(),
             BoxWidget(),
-            _wellcomeWidget(),
+            _wellcome(),
             BoxWidget(),
-            _inputContainerWidget(),
+            _inputContainer(),
           ],
         ),
       ),
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _wellcomeWidget() {
+  Widget _wellcome() {
     return Column(
       children: [
         Text(
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _inputContainerWidget() {
+  Widget _inputContainer() {
     return Column(
       children: [
         InputWidget(
@@ -88,19 +88,35 @@ class _LoginPageState extends State<LoginPage> {
           _string.emailInput,
           label: _string.email,
           bordered: true,
+          onChangeAction: _loginStore.setEmail,
         ),
         BoxWidget(),
-        InputWidget(
-          _txtPassword,
-          _string.passwordInput,
-          label: _string.password,
-          bordered: true,
+        Observer(
+          builder: (_) => InputWidget(
+            _txtPassword,
+            _string.passwordInput,
+            label: _string.password,
+            bordered: true,
+            isPassword: _loginStore.hidePassword,
+            onChangeAction: _loginStore.setPassowd,
+            suffix: IconButton(
+                icon: Icon(_loginStore.hidePassword ? Icons.visibility : Icons.visibility_off),
+                onPressed: _loginStore.togglePassword),
+          ),
         ),
         BoxWidget(),
         BoxWidget(),
-        ButtonWidget(() {
-          _goToDashboardPage();
-        }, _string.enterButton),
+        Observer(
+          builder: (_) {
+            return ButtonWidget(
+              () {
+                _loginStore.goToDashboardPage(context);
+              },
+              _string.enterButton,
+              enable: _loginStore.validForm,
+            );
+          },
+        ),
       ],
     );
   }
