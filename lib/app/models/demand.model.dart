@@ -42,6 +42,7 @@ class Demand {
   bool foodAdded(Food foodVerifier) {
     this.foodList.forEach((FoodDemand foodDemand) {
       if (foodDemand.food == foodVerifier) {
+        print('Food: ${foodVerifier.name}');
         return true;
       }
     });

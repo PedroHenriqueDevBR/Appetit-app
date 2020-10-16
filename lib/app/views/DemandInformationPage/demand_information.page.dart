@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:maida_coffee_challenge/app/models/demand.model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:maida_coffee_challenge/app/models/food.model.dart';
 import 'package:maida_coffee_challenge/app/models/food_category.model.dart';
 import 'package:maida_coffee_challenge/app/routes.dart';
-import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
+import 'package:maida_coffee_challenge/app/stores/demand_information.store.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/widgets/food_item_description.widget.dart';
@@ -19,16 +19,8 @@ class DemandInformationPage extends StatefulWidget {
 class _DemandInformationPageState extends State<DemandInformationPage> {
   AppColor _color = AppColor();
   AppString _string = AppString();
-  List<FoodCategory> _foods = FakeDataSingleton.instance.user.foodCategoryList;
+  DemandInformationStore _informationStore = DemandInformationStore();
   TextEditingController _txtSearch = TextEditingController();
-  Demand _demandOnRequest = Demand.creator();
-
-  void _searchFood(String search) {
-    setState(() {
-      _foods = [];
-      _foods = FakeDataSingleton.instance.user.searchFoods(search);
-    });
-  }
 
   void _closePage() {
     Navigator.pop(context);
@@ -36,7 +28,13 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
 
   void _goToSelectProductPage() {
     Navigator.pushNamed(context, AppRoute.LIST_CLIENTS_ROUTE,
-        arguments: this._demandOnRequest);
+        arguments: _informationStore.demandOnRequest);
+  }
+
+  @override
+  void initState() {
+    _informationStore.setFoodCategories();
+    super.initState();
   }
 
   @override
@@ -74,7 +72,7 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
       _string.whatSelling,
       child: Column(
         children: [
-          SearchField(_txtSearch, _searchFood),
+          SearchField(_txtSearch, _informationStore.searchFood),
           SizedBox(height: 32),
         ],
       ),
@@ -83,20 +81,22 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
 
   Widget _foodListContainer() {
     return Container(
-      child: ListView.separated(
-        separatorBuilder: (context, index) => Divider(
-          color: _color.progressIndicatorColor,
+      child: Observer(
+        builder: (_) => ListView.separated(
+          separatorBuilder: (context, index) => Divider(
+            color: _color.progressIndicatorColor,
+          ),
+          itemCount: _informationStore.foods.length,
+          physics: NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+              child: _categoryList(context, _informationStore.foods[index]),
+            );
+          },
         ),
-        itemCount: _foods.length,
-        physics: NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-            child: _categoryList(context, _foods[index]),
-          );
-        },
       ),
     );
   }
@@ -124,11 +124,25 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         Food food = foods[index];
+        _informationStore.setCurrentFood(food);
         return Column(
           children: [
-            this._demandOnRequest.foodAdded(food)
-                ? _selectedFood(food)
-                : _unselectedFood(food),
+            FoodItemDescription(
+              food,
+              applyShadow: true,
+              selected: _informationStore.foodHasSelected,
+              action: () async {
+                await Navigator.pushNamed(context, AppRoute.SELECT_FOOD_ROUTE,
+                    arguments: food)
+                    .then((food) {
+                  if (food != null) {
+                    setState(() {
+                      _informationStore.demandOnRequest.addFood(food);
+                    });
+                  }
+                });
+              },
+            ),
             SizedBox(height: 8),
           ],
         );
@@ -136,44 +150,8 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
     );
   }
 
-  Widget _selectedFood(Food food) {
-    return FoodItemDescriptionSelected(
-      food,
-      applyShadow: true,
-      action: () async {
-        await Navigator.pushNamed(context, AppRoute.SELECT_FOOD_ROUTE,
-                arguments: food)
-            .then((food) {
-          if (food != null) {
-            setState(() {
-              this._demandOnRequest.addFood(food);
-            });
-          }
-        });
-      },
-    );
-  }
-
-  Widget _unselectedFood(Food food) {
-    return FoodItemDescription(
-      food,
-      applyShadow: true,
-      action: () async {
-        await Navigator.pushNamed(context, AppRoute.SELECT_FOOD_ROUTE,
-                arguments: food)
-            .then((food) {
-          if (food != null) {
-            setState(() {
-              this._demandOnRequest.addFood(food);
-            });
-          }
-        });
-      },
-    );
-  }
-
   Widget _forwardButton() {
-    if (_demandOnRequest.foodList.length > 0) {
+    if (_informationStore.demandOnRequest.foodList.length > 0) {
       return GestureDetector(
         child: Container(
           padding: EdgeInsets.all(16),
@@ -183,7 +161,7 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${_string.total} ${_string.formatMoney(_demandOnRequest.getDemandTotal())}',
+                '${_string.total} ${_string.formatMoney(_informationStore.demandOnRequest.getDemandTotal())}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
