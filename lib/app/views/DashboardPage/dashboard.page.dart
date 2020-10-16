@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:maida_coffee_challenge/app/models/demand.model.dart';
 import 'package:maida_coffee_challenge/app/models/demand_date.model.dart';
 import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
+import 'package:maida_coffee_challenge/app/stores/demand_history.store.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/views/DashboardPage/create_demand_button.widget.dart';
@@ -18,22 +20,14 @@ class _DashboardPageState extends State<DashboardPage> {
   AppColor _color = AppColor();
   AppString _string = AppString();
   TextEditingController _txtSearch = TextEditingController();
-  List<DemandDate> demandsWithDate = FakeDataSingleton.instance.user.getAllDemands();
 
-  void search(String value) {
-    if (value.isEmpty) {
-      setState(() {
-        demandsWithDate = FakeDataSingleton.instance.user.getAllDemands();
-      });
-    } else {
-      setState(() {
-        demandsWithDate = FakeDataSingleton.instance.user.searchDemands(value);
-      });
-    }
-  }
+  // List<DemandDate> demandsWithDate = FakeDataSingleton.instance.user.getAllDemands();
+  DemandHistoryStore _historyStore = DemandHistoryStore();
 
-  void goTocreateDemandPage() {
-    Navigator.pushNamed(context, AppRoute.DEMAND_INFORMATION_ROUTE);
+  @override
+  void initState() {
+    _historyStore.setDemands();
+    super.initState();
   }
 
   @override
@@ -77,9 +71,11 @@ class _DashboardPageState extends State<DashboardPage> {
           thickness: 2,
         ),
         SizedBox(height: 32),
-        CreateDemandButton(goTocreateDemandPage),
+        CreateDemandButton(() {
+          _historyStore.goTocreateDemandPage(context);
+        }),
         SizedBox(height: 32),
-        SearchField(_txtSearch, search),
+        SearchField(_txtSearch, _historyStore.search),
         SizedBox(height: 32),
       ],
     );
@@ -87,19 +83,24 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _demandListContainer() {
     return Container(
-      child: ListView.builder(
-        itemCount: demandsWithDate.length,
-        physics: NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return _dateList(context, index, demandsWithDate);
+      child: Observer(
+        builder: (_) {
+          return ListView.builder(
+            itemCount: _historyStore.demandsWithDate.length,
+            physics: NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return _dateList(context, index, _historyStore.demandsWithDate);
+            },
+          );
         },
       ),
     );
   }
 
-  Widget _dateList(BuildContext context, int index, List<DemandDate> demandsWithDate) {
+  Widget _dateList(
+      BuildContext context, int index, List<DemandDate> demandsWithDate) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
