@@ -13,12 +13,10 @@ class FoodDemand {
     this.amount = 1;
   }
 
+  FoodDemand.noArgs();
+
   double getTotalPrice(){
     double price = food.price;
     return price * amount;
-  }
-
-  void selectOption(String option) {
-    this.selectedOption = option;
   }
 }

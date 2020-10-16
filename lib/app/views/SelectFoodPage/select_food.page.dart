@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:maida_coffee_challenge/app/models/food.model.dart';
 import 'package:maida_coffee_challenge/app/models/food_demand.model.dart';
+import 'package:maida_coffee_challenge/app/stores/selected_food.store.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/widgets/food_item_description.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/input.widget.dart';
+import 'package:mobx/mobx.dart';
 
 class SelectFoodPage extends StatefulWidget {
   Food food;
@@ -19,40 +22,25 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
   TextEditingController _txtDescription = TextEditingController();
   AppColor _color = AppColor();
   AppString _string = AppString();
-  FoodDemand _foodDemand;
-  String _selectedOption = '';
+  SelectedFoodStore _foodStore = SelectedFoodStore();
 
   void _goBack() {
     Navigator.pop(context);
   }
 
   void _goBackAndReturnFoodSelected() {
-    _foodDemand.observations = _txtDescription.text;
+    _foodStore.foodDemand.observations = _txtDescription.text;
     print('Pedido realizado');
-    print('Lanche ${_foodDemand.food.name}');
-    print('Quantidade ${_foodDemand.amount}');
-    print('Observações ${_foodDemand.observations}');
-    print('opção selecionada ${_foodDemand.selectedOption}');
-    Navigator.pop(context, _foodDemand);
-  }
-
-  void _addAmount() {
-    setState(() {
-      _foodDemand.amount++;
-    });
-  }
-
-  void _removeAmount() {
-    setState(() {
-      if (_foodDemand.amount > 1) {
-        _foodDemand.amount--;
-      }
-    });
+    print('Lanche ${_foodStore.foodDemand.food.name}');
+    print('Quantidade ${_foodStore.foodDemand.amount}');
+    print('Observações ${_foodStore.foodDemand.observations}');
+    print('opção selecionada ${_foodStore.foodDemand.selectedOption}');
+    Navigator.pop(context, _foodStore.foodDemand);
   }
 
   @override
   void initState() {
-    _foodDemand = FoodDemand.creator(widget.food);
+    _foodStore.setFoodDemand(widget.food);
     super.initState();
   }
 
@@ -103,7 +91,7 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 32),
-          FoodItemDescription(widget.food),
+          FoodItemDescription(_foodStore.foodDemand.food),
         ],
       ),
     );
@@ -133,13 +121,12 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
 
   Widget _listOptionsFromFood() {
     return ListView.builder(
-      itemCount: widget.food.options.length,
+      itemCount: _foodStore.foodDemand.food.options.length,
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return Container(
           margin: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
-          child: _foodOptionItem(index),
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
@@ -148,27 +135,23 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
             ),
             borderRadius: BorderRadius.all(Radius.circular(4)),
           ),
+          child: _foodOptionItem(index),
         );
       },
     );
   }
 
   Widget _foodOptionItem(int index) {
-    return RadioListTile(
-      value: _foodDemand.food.options[index],
+    return Observer(builder: (_) => RadioListTile(
+      value: _foodStore.foodDemand.food.options[index],
       title: Text(
-        widget.food.options[index],
+        _foodStore.foodDemand.food.options[index],
         style: TextStyle(fontSize: 16),
       ),
-      groupValue: _selectedOption,
-      onChanged: (value) {
-        _foodDemand.selectedOption = value;
-        setState(() {
-          _selectedOption = value;
-        });
-      },
+      groupValue: _foodStore.selectedOption,
+      onChanged: _foodStore.setSelectedOption,
       activeColor: _color.primaryColor,
-    );
+    ),);
   }
 
   Widget _observationsContainer() {
@@ -193,7 +176,8 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
   }
 
   Widget _selectAmountContainer() {
-    if (widget.food.options.length == 0 || _foodDemand.selectedOption != null) {
+    if (_foodStore.foodDemand.food.options.length == 0 ||
+        _foodStore.foodDemand.selectedOption != null) {
       return Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(color: _color.backgroundColor, boxShadow: [
@@ -218,51 +202,57 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
   }
 
   Widget _confimAmountButton() {
-    return MaterialButton(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5))),
-      padding: EdgeInsets.all(16),
-      color: _color.primaryColor,
-      child: Row(
-        children: [
-          Text(
-            _string.add,
-            style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
-          ),
-          SizedBox(width: 16),
-          Text(
-            'R\$ ${_string.formatMoney(_foodDemand.getTotalPrice())}',
-            style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
-          ),
-        ],
+    return Observer(
+      builder: (_) => MaterialButton(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5))),
+        padding: EdgeInsets.all(16),
+        color: _color.primaryColor,
+        child: Row(
+          children: [
+            Text(
+              _string.add,
+              style:
+                  TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+            ),
+            SizedBox(width: 16),
+            Text(
+              'R\$ ${_string.formatMoney(_foodStore.selectTotalPrice)}',
+              style:
+                  TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+            ),
+          ],
+        ),
+        onPressed: _goBackAndReturnFoodSelected,
       ),
-      onPressed: _goBackAndReturnFoodSelected,
     );
   }
 
   Widget _amountController() {
-    return Row(
-      children: [
-        IconButton(
-          icon: Icon(
-            Icons.remove,
-            size: 16,
+    return Observer(
+      builder: (_) => Row(
+        children: [
+          IconButton(
+            icon: Icon(
+              Icons.remove,
+              size: 16,
+            ),
+            onPressed: _foodStore.removeAmounnt,
           ),
-          onPressed: _removeAmount,
-        ),
-        SizedBox(width: 4),
-        Text('${_foodDemand.amount}'),
-        SizedBox(width: 4),
-        IconButton(
-          icon: Icon(
-            Icons.add,
-            size: 16,
-            color: _color.primaryColor,
+          SizedBox(width: 4),
+          Text('${_foodStore.amount}'),
+          SizedBox(width: 4),
+          IconButton(
+            icon: Icon(
+              Icons.add,
+              size: 16,
+              color: _color.primaryColor,
+            ),
+            onPressed: _foodStore.addAmounnt,
           ),
-          onPressed: _addAmount,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
