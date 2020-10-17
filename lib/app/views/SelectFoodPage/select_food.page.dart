@@ -30,11 +30,6 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
 
   void _goBackAndReturnFoodSelected() {
     _foodStore.foodDemand.observations = _txtDescription.text;
-    print('Pedido realizado');
-    print('Lanche ${_foodStore.foodDemand.food.name}');
-    print('Quantidade ${_foodStore.foodDemand.amount}');
-    print('Observações ${_foodStore.foodDemand.observations}');
-    print('opção selecionada ${_foodStore.foodDemand.selectedOption}');
     Navigator.pop(context, _foodStore.foodDemand);
   }
 
@@ -70,7 +65,7 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
             ),
           ),
         ),
-        _selectAmountContainer(),
+        Observer(builder: (_) => _selectAmountContainer(),),
       ],
     );
   }
@@ -176,8 +171,7 @@ class _SelectFoodPageState extends State<SelectFoodPage> {
   }
 
   Widget _selectAmountContainer() {
-    if (_foodStore.foodDemand.food.options.length == 0 ||
-        _foodStore.foodDemand.selectedOption != null) {
+    if (_foodStore.foodDemand.food.options.length == 0 || _foodStore.isValidSelectedOption) {
       return Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(color: _color.backgroundColor, boxShadow: [

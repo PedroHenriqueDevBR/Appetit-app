@@ -41,4 +41,7 @@ abstract class _SelectedFoodStore with Store {
 
   @computed
   double get selectTotalPrice => foodDemand.food.price * amount;
+
+  @computed
+  bool get isValidSelectedOption => selectedOption.isNotEmpty;
 }
