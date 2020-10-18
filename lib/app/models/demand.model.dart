@@ -48,4 +48,18 @@ class Demand {
     });
     return false;
   }
+
+  String getFoodNamesInLine() {
+    String result = '';
+
+    for (int i = 0; i < this.foodList.length; i++) {
+      FoodDemand foodDemand = foodList[i];
+      if (i == foodList.length - 1) {
+        result += '${foodDemand.amount}X ${foodDemand.food.name}';
+      } else {
+        result += '${foodDemand.amount}X ${foodDemand.food.name}, ';
+      }
+    }
+    return result;
+  }
 }

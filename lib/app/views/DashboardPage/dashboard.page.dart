@@ -145,7 +145,7 @@ class _DashboardPageState extends State<DashboardPage> {
           subtitle: Container(
             width: MediaQuery.of(context).size.width,
             child: Text(
-              'sd lkajsdhaljk shdfkjlas hdflkasjhdf jlk nashdfguawye fjhsadfg uisaftdg',
+              demand.getFoodNamesInLine(),
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               overflow: TextOverflow.ellipsis,
             ),
