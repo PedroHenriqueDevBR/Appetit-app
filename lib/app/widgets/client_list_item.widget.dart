@@ -7,15 +7,17 @@ import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 class ClientListItem extends StatelessWidget {
   AppColor _color = AppColor();
   AppString _string = AppString();
+
   Client client;
   Function action;
   bool selected;
+  bool hide;
 
-  ClientListItem(this.client, {this.action, this.selected=false});
+  ClientListItem(this.client, {this.action, this.selected=false, this.hide=false});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return hide ? Container() : Container(
       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 0),
       child: _foodItem(context),
       decoration: BoxDecoration(

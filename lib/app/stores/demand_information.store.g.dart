@@ -78,6 +78,17 @@ mixin _$DemandInformationStore on _DemandInformationStore, Store {
   }
 
   @override
+  void addFood(FoodDemand food) {
+    final _$actionInfo = _$_DemandInformationStoreActionController.startAction(
+        name: '_DemandInformationStore.addFood');
+    try {
+      return super.addFood(food);
+    } finally {
+      _$_DemandInformationStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setFoodCategories() {
     final _$actionInfo = _$_DemandInformationStoreActionController.startAction(
         name: '_DemandInformationStore.setFoodCategories');

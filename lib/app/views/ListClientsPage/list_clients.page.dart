@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:maida_coffee_challenge/app/models/client.model.dart';
 import 'package:maida_coffee_challenge/app/models/demand.model.dart';
-import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
+import 'package:maida_coffee_challenge/app/stores/client.store.dart';
+import 'package:maida_coffee_challenge/app/stores/client_list.store.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/views/CloseDemandPage/close_demand.page.dart';
@@ -22,27 +24,7 @@ class _ListClientsPageState extends State<ListClientsPage> {
   TextEditingController _txtSearch = TextEditingController();
   AppString _string = AppString();
   AppColor _color = AppColor();
-  Demand _demandOnRequest;
-  List<Client> _clients = [];
-  List<Client> _presentationClients = [];
-  List<int> _selectedPositions = [];
-
-  void _togglePosition(int position) {
-    int index = _selectedPositions.indexOf(position);
-    if (index >= 0) {
-      setState(() {
-        _selectedPositions.removeAt(index);
-      });
-    } else {
-      setState(() {
-        _selectedPositions.add(position);
-      });
-    }
-  }
-
-  bool _clientAdded(int index) {
-    return _selectedPositions.indexOf(index) >= 0;
-  }
+  ClientListStore _clientStore = ClientListStore();
 
   void _goBack() {
     Navigator.pop(context);
@@ -50,43 +32,24 @@ class _ListClientsPageState extends State<ListClientsPage> {
 
   void _goToCloseDemandPage() {
     List<Client> clients = [];
-    for (int i = 0; i < this._clients.length; i++) {
-      if (this._selectedPositions.contains(i)) {
-        clients.add(this._clients[i]);
+
+    for (ClientStore client in _clientStore.clients) {
+      if (client.selected) {
+        clients.add(client.client);
       }
     }
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CloseDemandPage(_demandOnRequest, clients),
+          builder: (context) =>
+              CloseDemandPage(_clientStore.demandOnRequest, clients),
         ));
-  }
-
-  void _searchClient(String keyword) {
-    keyword = keyword.toLowerCase();
-    if (keyword.isEmpty) {
-      setState(() {
-        this._presentationClients = _clients;
-      });
-    } else {
-      List<Client> clientAux = [];
-      this._clients.forEach((Client client) {
-        String clientName = client.name.toLowerCase();
-        if (clientName.contains(keyword)) {
-          clientAux.add(client);
-        }
-      });
-      setState(() {
-        _presentationClients = clientAux;
-      });
-    }
   }
 
   @override
   void initState() {
-    this._demandOnRequest = widget.demand;
-    this._clients = FakeDataSingleton.instance.clients;
-    this._presentationClients = FakeDataSingleton.instance.clients;
+    _clientStore.setDemandData(widget.demand);
+    _clientStore.setClientData();
     super.initState();
   }
 
@@ -114,7 +77,9 @@ class _ListClientsPageState extends State<ListClientsPage> {
             ),
           ),
         ),
-        _forwardButton(),
+        Observer(
+          builder: (_) => _forwardButton(),
+        ),
       ],
     );
   }
@@ -123,7 +88,7 @@ class _ListClientsPageState extends State<ListClientsPage> {
     return HeaderInformationWidget(
       2,
       _string.whichClient,
-      child: SearchField(_txtSearch, _searchClient),
+      child: SearchField(_txtSearch, _clientStore.searchClient),
     );
   }
 
@@ -146,31 +111,36 @@ class _ListClientsPageState extends State<ListClientsPage> {
   }
 
   Widget _clientList() {
-    return ListView.builder(
-      itemCount: _presentationClients.length,
-      physics: NeverScrollableScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        Client client = _presentationClients[index];
-        return Column(
-          children: [
-            ClientListItem(
-              client,
-              selected: _clientAdded(index),
-              action: () {
-                _togglePosition(index);
-              },
-            ),
-            SizedBox(height: 8),
-          ],
-        );
-      },
+    return Container(
+      child: Observer(
+        builder: (_) => ListView.builder(
+          itemCount: _clientStore.clients.length,
+          physics: NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            ClientStore client = _clientStore.clients[index];
+            return Column(
+              children: [
+                Observer(
+                  builder: (_) => ClientListItem(
+                    client.client,
+                    selected: client.selected,
+                    hide: client.hide,
+                    action: client.toggleSelected,
+                  ),
+                ),
+                SizedBox(height: 8),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 
   Widget _forwardButton() {
-    if (_selectedPositions.length > 0) {
+    if (_clientStore.enableButton) {
       return GestureDetector(
         child: Container(
           padding: EdgeInsets.all(16),
@@ -180,9 +150,9 @@ class _ListClientsPageState extends State<ListClientsPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                _selectedPositions.length == 1
-                    ? '${this._selectedPositions.length} ${_string.oneSelectedClient}'
-                    : '${this._selectedPositions.length} ${_string.manySelectedClients}',
+                _clientStore.totalSelectedClients == 1
+                    ? '${_clientStore.totalSelectedClients} ${_string.oneSelectedClient}'
+                    : '${_clientStore.totalSelectedClients} ${_string.manySelectedClients}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,

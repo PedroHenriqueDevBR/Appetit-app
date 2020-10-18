@@ -26,6 +26,11 @@ abstract class _DemandInformationStore with Store {
   void setSearchText(String value) => searchText = value;
 
   @action
+  void addFood(FoodDemand food) {
+    demandOnRequest.addFood(food);
+  }
+
+  @action
   void setFoodCategories() {
     List<FoodCategory> foodCategories = FakeDataSingleton.instance.user.foodCategoryList;
     for (FoodCategory item in foodCategories) {

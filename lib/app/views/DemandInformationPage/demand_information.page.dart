@@ -72,7 +72,7 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
       _string.whatSelling,
       child: Column(
         children: [
-          SearchField(_txtSearch, _informationStore.searchFood),
+            SearchField(_txtSearch, _informationStore.searchFood),
           SizedBox(height: 32),
         ],
       ),
@@ -137,7 +137,7 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
                     .then((food) {
                   if (food != null) {
                     setState(() {
-                      _informationStore.demandOnRequest.addFood(food);
+                      _informationStore.addFood(food);
                     });
                   }
                 });

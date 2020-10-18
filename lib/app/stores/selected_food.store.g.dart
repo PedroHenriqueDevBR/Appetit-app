@@ -16,6 +16,13 @@ mixin _$SelectedFoodStore on _SelectedFoodStore, Store {
           Computed<double>(() => super.selectTotalPrice,
               name: '_SelectedFoodStore.selectTotalPrice'))
       .value;
+  Computed<bool> _$isValidSelectedOptionComputed;
+
+  @override
+  bool get isValidSelectedOption => (_$isValidSelectedOptionComputed ??=
+          Computed<bool>(() => super.isValidSelectedOption,
+              name: '_SelectedFoodStore.isValidSelectedOption'))
+      .value;
 
   final _$foodDemandAtom = Atom(name: '_SelectedFoodStore.foodDemand');
 
@@ -115,7 +122,8 @@ mixin _$SelectedFoodStore on _SelectedFoodStore, Store {
 foodDemand: ${foodDemand},
 selectedOption: ${selectedOption},
 amount: ${amount},
-selectTotalPrice: ${selectTotalPrice}
+selectTotalPrice: ${selectTotalPrice},
+isValidSelectedOption: ${isValidSelectedOption}
     ''';
   }
 }
