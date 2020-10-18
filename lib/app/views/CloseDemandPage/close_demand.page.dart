@@ -32,6 +32,7 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
   }
 
   void _goToEndPage() {
+    _statusDemandStore.registerDemands();
     Navigator.pushNamedAndRemoveUntil(
         context, AppRoute.END_ROUTE, (route) => false);
   }

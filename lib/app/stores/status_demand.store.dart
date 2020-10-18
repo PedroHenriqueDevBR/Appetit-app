@@ -34,6 +34,6 @@ abstract class _StatusDemandStore with Store {
   }
 
   @computed
-  bool get enableButton => demandStore.demand.date != null && demandStore.paid != null;
+  bool get enableButton => demandStore.date.isNotEmpty && demandStore.paid != null;
 
 }
