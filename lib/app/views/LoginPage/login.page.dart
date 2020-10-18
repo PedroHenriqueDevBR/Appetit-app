@@ -86,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
         InputWidget(
           _txtMail,
           _string.emailInput,
+          type: TextInputType.emailAddress,
           label: _string.email,
           bordered: true,
           onChangeAction: _loginStore.setEmail,

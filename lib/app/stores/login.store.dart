@@ -32,7 +32,7 @@ abstract class _LoginStore with Store {
   bool get validEmail => RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(this.email);
 
   @computed
-  bool get validPassword => password.length > 6;
+  bool get validPassword => password.length >= 6;
 
   @computed
   bool get validForm => validEmail && validPassword;

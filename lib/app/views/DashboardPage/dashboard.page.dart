@@ -27,6 +27,7 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     _historyStore.setDemands();
+    _historyStore.setUser();
     super.initState();
   }
 
@@ -59,7 +60,7 @@ class _DashboardPageState extends State<DashboardPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Olá, Alessandra!',
+          '${_string.hello}, ${_historyStore.user.name}',
           style: TextStyle(
             fontSize: 24,
             color: _color.primaryDarkColor,
