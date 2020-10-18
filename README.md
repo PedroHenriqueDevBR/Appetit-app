@@ -4,7 +4,7 @@
 </h1>
 
 <h3 align="center">
-    Front-end da aplicação para solicitação de pedidos em um café fictício.
+    :coffee: Front-end da aplicação para solicitação de pedidos em um café fictício.
 </h3>
 
 
@@ -15,11 +15,11 @@
 <img alt="Framework" src="https://img.shields.io/badge/State_Manager-MobX-blue">
 </p>
 
-# Visão Geral
+# :memo: Visão Geral
 
 Esta aplicação foi desenvolvida durante o processo de seleção para programador mobile Júnior da empresa Maida Health, esta aplicação contempla o front-end da solução, ou seja, não utiliza o consumo de dados de nenhuma API externa.
 
-# Tecnologias utilizadas
+# :rocket: Tecnologias utilizadas
 
 <br>
 
@@ -28,7 +28,7 @@ Esta aplicação foi desenvolvida durante o processo de seleção para programad
 * <img alt="MobX" src="https://img.shields.io/badge/-MobX-blue"> - Biblioteca utilizada para facilitar a gerência de estado da aplicação.
 
 
-# Modelagame da aplicação
+# :bulb: Modelagem da aplicação
 
 Esta seção irá mostrar como a aplicação foi modelada para que pudesse atender todas as necessidades propostas da descrição do desafio.
 
@@ -74,7 +74,7 @@ A modelagem foi criada antes de iniciar o desenvolvimento da aplicação, com o 
 
 * **End** - Página que informa a finalização do pedido, a partir dessa página o usuário possui duas opções, ir para a página History ou fazer um novo pedido em Demand Information. 
 
-# Pré-requisitos
+# :warning: Pré-requisitos
 
 O desenvolvimento dessa aplicação utiliza como base as seguintes tecnologias e versões apresentadas abaixo. Caso ocorra algum erro na execução da aplicação ou mesmo nos comandos de configurações, verifique se a versão do Dart e do Flutter no seu computador estão devidamente atualizados.
 
@@ -83,7 +83,7 @@ O desenvolvimento dessa aplicação utiliza como base as seguintes tecnologias e
 3. git version 2.17.1
 
 
-# Instalação
+# :information_source: Instalação
 
 1.  Clone ou faça o download do repositório:
     ```bash
@@ -104,7 +104,7 @@ O desenvolvimento dessa aplicação utiliza como base as seguintes tecnologias e
     ```
 
 
-## Funcionalidades
+## :heavy_check_mark: Funcionalidades
 - [x] Páginas de login;
 - [x] Página com lista de pedidos efetuados;
 - [x] Página de novos pedidos;
@@ -113,7 +113,7 @@ O desenvolvimento dessa aplicação utiliza como base as seguintes tecnologias e
 - [x] Página de adicionar informações ao pedido;
 - [x] Feedback do pedido realizado.
 
-# Screenshots (All screenshots)
+# :iphone: Screenshots (All screenshots)
 
 ## Login
 
