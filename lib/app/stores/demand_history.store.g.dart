@@ -25,6 +25,21 @@ mixin _$DemandHistoryStore on _DemandHistoryStore, Store {
     });
   }
 
+  final _$userAtom = Atom(name: '_DemandHistoryStore.user');
+
+  @override
+  User get user {
+    _$userAtom.reportRead();
+    return super.user;
+  }
+
+  @override
+  set user(User value) {
+    _$userAtom.reportWrite(value, super.user, () {
+      super.user = value;
+    });
+  }
+
   final _$_DemandHistoryStoreActionController =
       ActionController(name: '_DemandHistoryStore');
 
@@ -34,6 +49,17 @@ mixin _$DemandHistoryStore on _DemandHistoryStore, Store {
         name: '_DemandHistoryStore.setDemands');
     try {
       return super.setDemands();
+    } finally {
+      _$_DemandHistoryStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setUser() {
+    final _$actionInfo = _$_DemandHistoryStoreActionController.startAction(
+        name: '_DemandHistoryStore.setUser');
+    try {
+      return super.setUser();
     } finally {
       _$_DemandHistoryStoreActionController.endAction(_$actionInfo);
     }
@@ -53,7 +79,8 @@ mixin _$DemandHistoryStore on _DemandHistoryStore, Store {
   @override
   String toString() {
     return '''
-demandOnRequest: ${demandOnRequest}
+demandOnRequest: ${demandOnRequest},
+user: ${user}
     ''';
   }
 }
