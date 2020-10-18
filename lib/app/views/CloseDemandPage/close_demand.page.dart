@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:maida_coffee_challenge/app/models/client.model.dart';
 import 'package:maida_coffee_challenge/app/models/demand.model.dart';
 import 'package:maida_coffee_challenge/app/routes.dart';
-import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
+import 'package:maida_coffee_challenge/app/stores/demand.store.dart';
+import 'package:maida_coffee_challenge/app/stores/status_demand.store.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/widgets/button.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/header_information.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/shadow_container.widget.dart';
+import 'package:mobx/mobx.dart';
 
 class CloseDemandPage extends StatefulWidget {
   Demand demand;
@@ -22,35 +25,21 @@ class CloseDemandPage extends StatefulWidget {
 class _CloseDemandPageState extends State<CloseDemandPage> {
   AppColor _color = AppColor();
   AppString _string = AppString();
-  Demand _demand;
-  List<Client> _clients;
-
-  void _togglePaid(value) {
-    setState(() {
-      this._demand.paid = value;
-    });
-  }
+  StatusDemandStore _statusDemandStore = StatusDemandStore();
 
   void _goBack() {
     Navigator.pop(context);
   }
 
-  void _registerDemands() {
-    for (Client client in this._clients) {
-      Demand demand = this._demand.copyWith(client);
-      FakeDataSingleton.instance.addDemand(demand);
-    }
-  }
-  
   void _goToEndPage() {
-    this._registerDemands();
-    Navigator.pushReplacementNamed(context, AppRoute.END_ROUTE);
+    Navigator.pushNamedAndRemoveUntil(
+        context, AppRoute.END_ROUTE, (route) => false);
   }
 
   @override
   void initState() {
-    this._demand = widget.demand;
-    this._clients = widget.clients;
+    _statusDemandStore.setDemand(widget.demand);
+    _statusDemandStore.setClients(widget.clients);
     super.initState();
   }
 
@@ -80,7 +69,13 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
         ),
         Container(
           padding: EdgeInsets.all(16),
-          child: ButtonWidget(_goToEndPage, _string.finalizeDemand),
+          child: Observer(
+            builder: (_) => ButtonWidget(
+              _goToEndPage,
+              _string.finalizeDemand,
+              enable: _statusDemandStore.enableButton,
+            ),
+          ),
         ),
       ],
     );
@@ -101,6 +96,7 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
   }
 
   Widget _getDate() {
+    DemandStore demandStore = _statusDemandStore.demandStore;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -110,15 +106,19 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
         ),
         SizedBox(height: 16),
         GestureDetector(
-          child: ShadowContainerWidget(
-            child: ListTile(
-              leading: Icon(Icons.date_range),
-              title: Text(
-                  this._demand.date == null ? this._string.chooseDate : this._demand.date
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                size: 14,
+          child: Observer(
+            builder: (_) => ShadowContainerWidget(
+              child: ListTile(
+                leading: Icon(Icons.date_range),
+                title: Text(
+                  demandStore.date == null || demandStore.date.isEmpty
+                      ? this._string.chooseDate
+                      : demandStore.date,
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  size: 14,
+                ),
               ),
             ),
           ),
@@ -133,9 +133,7 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
               locale: Locale("pt", "BR"),
             ).then(
               (date) {
-                setState(() {
-                  this._demand.date = _string.formatDate(date);
-                });
+                demandStore.setDate(_string.formatDate(date));
               },
             );
           },
@@ -160,15 +158,28 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
   }
 
   Widget _radioList() {
-    return Column(
-      children: [
-        ShadowContainerWidget(
-          child: _radio(_string.yes, true, this._demand.paid, _togglePaid),
-        ),
-        ShadowContainerWidget(
-          child: _radio(_string.no, false, this._demand.paid, _togglePaid),
-        ),
-      ],
+    DemandStore demandStore = _statusDemandStore.demandStore;
+    return Observer(
+      builder: (_) => Column(
+        children: [
+          ShadowContainerWidget(
+            child: _radio(
+              _string.yes,
+              true,
+              demandStore.paid,
+              demandStore.togglePaid,
+            ),
+          ),
+          ShadowContainerWidget(
+            child: _radio(
+              _string.no,
+              false,
+              demandStore.paid,
+              demandStore.togglePaid,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

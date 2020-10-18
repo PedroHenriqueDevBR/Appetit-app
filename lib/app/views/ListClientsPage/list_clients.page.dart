@@ -32,17 +32,19 @@ class _ListClientsPageState extends State<ListClientsPage> {
 
   void _goToCloseDemandPage() {
     List<Client> clients = [];
+    Demand demand = _clientStore.demandOnRequest;
 
     for (ClientStore client in _clientStore.clients) {
       if (client.selected) {
         clients.add(client.client);
       }
     }
+
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              CloseDemandPage(_clientStore.demandOnRequest, clients),
+          builder: (_) =>
+              CloseDemandPage(demand, clients),
         ));
   }
 
