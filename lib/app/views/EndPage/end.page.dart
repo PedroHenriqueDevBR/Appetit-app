@@ -11,7 +11,6 @@ class EndPage extends StatefulWidget {
 }
 
 class _EndPageState extends State<EndPage> {
-  AppColor _color = AppColor();
   AppString _string = AppString();
 
   void _goToNewDemandPage() {
@@ -45,7 +44,7 @@ class _EndPageState extends State<EndPage> {
             padding: EdgeInsets.all(16),
             child: Column(
               children: [
-                ButtonWidget(_goToNewDemandPage, _string.newDemand),
+                ButtonWidget(_goToNewDemandPage, _string.newDemand, enable: true,),
                 SizedBox(height: 12),
                 OutlineButtonWidget(_goToDashboardPage, _string.goToHomePage),
               ],
