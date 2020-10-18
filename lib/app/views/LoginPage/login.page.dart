@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/stores/login.store.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
@@ -43,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _logoWidget() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 64, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       width: MediaQuery.of(context).size.width,
       child: Image.asset(
         'assets/images/app_logo.png',
@@ -71,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w400,
-              height: 1.4,
+              height: 1.6,
             ),
             textAlign: TextAlign.center,
           ),
@@ -90,6 +89,7 @@ class _LoginPageState extends State<LoginPage> {
           label: _string.email,
           bordered: true,
           onChangeAction: _loginStore.setEmail,
+          textInputAction: TextInputAction.next,
         ),
         BoxWidget(),
         Observer(
