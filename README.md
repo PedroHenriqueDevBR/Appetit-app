@@ -8,15 +8,12 @@
 </h3>
 
 
-<div align="center">
-
-![GitHub top language](https://img.shields.io/github/languages/top/pedrohenriquedevbr/Appetit-app)
-
-![Framework](https://img.shields.io/badge/Framework-Flutter-blue)
-
-![State manager](https://img.shields.io/badge/State_Manager-MobX-blue)
-
-</div>
+<p align="center">
+<img alt="Developer" src="https://img.shields.io/badge/Developer-PedroHenriqueDevBR-green">
+<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/pedrohenriquedevbr/Appetit-app">
+<img alt="Framework" src="https://img.shields.io/badge/Framework-Flutter-blue">
+<img alt="Framework" src="https://img.shields.io/badge/State_Manager-MobX-blue">
+</p>
 
 # Visão Geral
 
@@ -24,17 +21,11 @@ Esta aplicação foi desenvolvida durante o processo de seleção para programad
 
 # Tecnologias utilizadas
 
-<div style="display: flex; flex-direction: row; justify-content: space-around;">
- <img width="200" height="100" src="./docs/assets/dart.jpg" />
- <img width="200" height="100" src="./docs/assets/flutter.png" />
- <img width="100" height="100" src="./docs/assets/mobx.png" />
-</div>
-
 <br>
 
-* Dart - Linguagem de programação utilizada pelo Framework Flutter.
-* Flutter - Framework utilizado no desenvolvimento da aplicação.
-* MobX - Biblioteca utilizada para facilitar a gerência de estado da aplicação.
+* <img alt="Dart" src="https://img.shields.io/badge/-Dart-blue"> - Linguagem de programação utilizada pelo Framework Flutter.
+* <img alt="Flutter" src="https://img.shields.io/badge/-Flutter-blue"> - Framework utilizado no desenvolvimento da aplicação.
+* <img alt="MobX" src="https://img.shields.io/badge/-MobX-blue"> - Biblioteca utilizada para facilitar a gerência de estado da aplicação.
 
 
 # Modelagame da aplicação
@@ -133,27 +124,39 @@ O desenvolvimento dessa aplicação utiliza como base as seguintes tecnologias e
 </div>
 
 ## History
+<div>
 <img src="./docs/screenshots/history-01.png" width="210" />
 <img src="./docs/screenshots/history-02.png" width="210" />
+</div>
 
 ## Demand information
+<div>
 <img src="./docs/screenshots/demand-informatio-01.png" width="210" />
 <img src="./docs/screenshots/demand-informatio-02.png" width="210" />
 <img src="./docs/screenshots/demand-informatio-03.png" width="210" />
+</div>
 
 ## Select product
+<div>
 <img src="./docs/screenshots/select-food-01.png" width="210" />
 <img src="./docs/screenshots/select-food-02.png" width="210" />
+</div>
 
 ## Client List
+<div>
 <img src="./docs/screenshots/client-list-01.png" width="210" />
 <img src="./docs/screenshots/client-list-02.png" width="210" />
 <img src="./docs/screenshots/client-list-03.png" width="210" />
+</div>
 
 ## Demand Status
+<div>
 <img src="./docs/screenshots/demand-status-01.png" width="210" />
 <img src="./docs/screenshots/demand-status-02.png" width="210" />
 <img src="./docs/screenshots/demand-status-03.png" width="210" />
+</div>
 
 ## End
+<div>
 <img src="./docs/screenshots/end.png" width="210" />
+</div>
