@@ -5,12 +5,11 @@ import 'package:maida_coffee_challenge/app/models/demand.model.dart';
 import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/stores/demand.store.dart';
 import 'package:maida_coffee_challenge/app/stores/status_demand.store.dart';
-import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
+import 'package:maida_coffee_challenge/app/views/CloseDemandPage/radio_item.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/button.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/header_information.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/shadow_container.widget.dart';
-import 'package:mobx/mobx.dart';
 
 class CloseDemandPage extends StatefulWidget {
   Demand demand;
@@ -23,7 +22,6 @@ class CloseDemandPage extends StatefulWidget {
 }
 
 class _CloseDemandPageState extends State<CloseDemandPage> {
-  AppColor _color = AppColor();
   AppString _string = AppString();
   StatusDemandStore _statusDemandStore = StatusDemandStore();
 
@@ -51,34 +49,30 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
         leading:
             IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: _goBack),
       ),
-      body: _body(),
-    );
-  }
-
-  Widget _body() {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                HeaderInformationWidget(3, _string.finalizeDemand),
-                _getDataFromDemand(),
-              ],
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  HeaderInformationWidget(3, _string.finalizeDemand),
+                  _getDataFromDemand(),
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          padding: EdgeInsets.all(16),
-          child: Observer(
-            builder: (_) => ButtonWidget(
-              _goToEndPage,
-              _string.finalizeDemand,
-              enable: _statusDemandStore.enableButton,
+          Container(
+            padding: EdgeInsets.all(16),
+            child: Observer(
+              builder: (_) => ButtonWidget(
+                _goToEndPage,
+                _string.finalizeDemand,
+                enable: _statusDemandStore.enableButton,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -90,13 +84,13 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
         children: [
           _getPaidInformation(),
           SizedBox(height: 16),
-          _getDate(),
+          _getDateContainer(),
         ],
       ),
     );
   }
 
-  Widget _getDate() {
+  Widget _getDateContainer() {
     DemandStore demandStore = _statusDemandStore.demandStore;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,22 +101,7 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
         ),
         SizedBox(height: 16),
         GestureDetector(
-          child: Observer(
-            builder: (_) => ShadowContainerWidget(
-              child: ListTile(
-                leading: Icon(Icons.date_range),
-                title: Text(
-                  demandStore.date == null || demandStore.date.isEmpty
-                      ? this._string.chooseDate
-                      : demandStore.date,
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  size: 14,
-                ),
-              ),
-            ),
-          ),
+          child: _getDateTile(demandStore),
           onTap: () {
             showDatePicker(
               context: context,
@@ -140,6 +119,25 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
           },
         ),
       ],
+    );
+  }
+
+  Widget _getDateTile(DemandStore demandStore) {
+    return Observer(
+      builder: (_) => ShadowContainerWidget(
+        child: ListTile(
+          leading: Icon(Icons.date_range),
+          title: Text(
+            demandStore.date == null || demandStore.date.isEmpty
+                ? this._string.chooseDate
+                : demandStore.date,
+          ),
+          trailing: Icon(
+            Icons.arrow_forward_ios,
+            size: 14,
+          ),
+        ),
+      ),
     );
   }
 
@@ -164,7 +162,7 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
       builder: (_) => Column(
         children: [
           ShadowContainerWidget(
-            child: _radio(
+            child: RadioItemWidget(
               _string.yes,
               true,
               demandStore.paid,
@@ -172,7 +170,7 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
             ),
           ),
           ShadowContainerWidget(
-            child: _radio(
+            child: RadioItemWidget(
               _string.no,
               false,
               demandStore.paid,
@@ -180,20 +178,6 @@ class _CloseDemandPageState extends State<CloseDemandPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _radio(
-      String title, dynamic value, dynamic groupValue, Function onChange) {
-    return RadioListTile(
-      value: value,
-      groupValue: groupValue,
-      activeColor: _color.primaryColor,
-      onChanged: onChange,
-      title: Text(
-        title,
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
       ),
     );
   }
