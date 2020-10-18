@@ -56,7 +56,7 @@ A modelagem foi criada antes de iniciar o desenvolvimento da aplicação, com o 
 
 ## Mapa da aplicação
 
-<img width="100%" src="./docs/models/pages.png" />
+<img width="100%" src="./docs/models/pages.svg" />
 
 ### Descrição das páginas
 
