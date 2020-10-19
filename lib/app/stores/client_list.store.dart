@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:maida_coffee_challenge/app/models/client.model.dart';
 import 'package:maida_coffee_challenge/app/models/demand.model.dart';
 import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
@@ -32,7 +33,7 @@ abstract class _ClientListStore with Store {
   void searchClient(String keyword) {
     keyword = keyword.toLowerCase();
     for (ClientStore clientStore in clients) {
-      bool hasMatch = clientStore.client.name.contains(keyword);
+      bool hasMatch = clientStore.client.name.toLowerCase().contains(keyword);
       clientStore.setHide(!hasMatch);
     }
   }
@@ -52,5 +53,8 @@ abstract class _ClientListStore with Store {
     }
     return total;
   }
+
+  @computed
+  List<ClientStore> get getClients => this.clients;
 
 }
