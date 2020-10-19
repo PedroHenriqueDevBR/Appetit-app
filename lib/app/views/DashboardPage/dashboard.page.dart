@@ -3,8 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:maida_coffee_challenge/app/models/demand.model.dart';
 import 'package:maida_coffee_challenge/app/models/demand_date.model.dart';
-import 'package:maida_coffee_challenge/app/routes.dart';
-import 'package:maida_coffee_challenge/app/singleton/fake_data.singleton.dart';
 import 'package:maida_coffee_challenge/app/stores/demand_history.store.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
@@ -20,8 +18,6 @@ class _DashboardPageState extends State<DashboardPage> {
   AppColor _color = AppColor();
   AppString _string = AppString();
   TextEditingController _txtSearch = TextEditingController();
-
-  // List<DemandDate> demandsWithDate = FakeDataSingleton.instance.user.getAllDemands();
   DemandHistoryStore _historyStore = DemandHistoryStore();
 
   @override
@@ -37,19 +33,15 @@ class _DashboardPageState extends State<DashboardPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
       ),
-      body: _bodyWidget(),
-    );
-  }
-
-  Widget _bodyWidget() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            _headerInformations(),
-            _demandListContainer(),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            children: [
+              _headerInformations(),
+              _demandListContainer(),
+            ],
+          ),
         ),
       ),
     );
