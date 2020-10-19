@@ -7,7 +7,6 @@ import 'package:maida_coffee_challenge/app/stores/demand_information.store.dart'
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/widgets/food_item_description.widget.dart';
-import 'package:maida_coffee_challenge/app/widgets/food_item_description_selected.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/header_information.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/search_field.widget.dart';
 
@@ -44,28 +43,24 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
         leading:
             IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: _closePage),
       ),
-      body: _body(),
-    );
-  }
-
-  Widget _body() {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _headerInformations(),
-                _foodListContainer(),
-              ],
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _headerInformations(),
+                  _foodListContainer(),
+                ],
+              ),
             ),
           ),
-        ),
-        _forwardButton(),
-      ],
+          _forwardButton(),
+        ],
+      ),
     );
   }
-
+  
   Widget _headerInformations() {
     return HeaderInformationWidget(
       1,
