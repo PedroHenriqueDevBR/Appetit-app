@@ -19,7 +19,17 @@
 
 Esta aplicação foi desenvolvida durante o processo de seleção para programador mobile Júnior da empresa Maida Health, esta aplicação contempla o front-end da solução, ou seja, não utiliza o consumo de dados de nenhuma API externa.
 
-# :rocket: Tecnologias utilizadas
+
+ * <strong><a href="#tecnologias">Tecnologias utilizadas</a></strong>
+ * <strong><a href="#modelagem">Modelagem da aplicação</a></strong>
+    * <strong><a href="#modelagem-classes">Modelagem das classes</a></strong>
+    * <strong><a href="#modelagem-mapa-aplicacao">Mapa da aplicação</a></strong>
+ * <strong><a href="#requisitos">Pré-requisitos</a></strong>
+ * <strong><a href="#instalacao">Instalação</a></strong>
+ * <strong><a href="#funcionalidades">Funcionalidades</a></strong>
+ * <strong><a href="#screenshots">Screenshots</a></strong>
+
+<h1 id="tecnologias">:rocket: Tecnologias utilizadas</h1>
 
 <br>
 
@@ -27,14 +37,13 @@ Esta aplicação foi desenvolvida durante o processo de seleção para programad
 * <img alt="Flutter" src="https://img.shields.io/badge/-Flutter-blue"> - Framework utilizado no desenvolvimento da aplicação.
 * <img alt="MobX" src="https://img.shields.io/badge/-MobX-blue"> - Biblioteca utilizada para facilitar a gerência de estado da aplicação.
 
-
-# :bulb: Modelagem da aplicação
+<h1 id="modelagem">:bulb: Modelagem da aplicação</h1>
 
 Esta seção irá mostrar como a aplicação foi modelada para que pudesse atender todas as necessidades propostas da descrição do desafio.
 
 A modelagem foi criada antes de iniciar o desenvolvimento da aplicação, com o objetivo de guiar o desenvolvimento e evitar erros que pudessem atrapalhar o andamento do desenvolvimento.
 
-## Modelagem das classes
+<h2 id="modelagem-classes">Modelagem das classes</h2>
 
 <img width="100%" src="./docs/models/project-modeling.png" />
 
@@ -54,7 +63,7 @@ A modelagem foi criada antes de iniciar o desenvolvimento da aplicação, com o 
 
 * **Demand Date** - Classe auxiliar, o objetivo dessa classe é facilitar a apresentação dos pedidos em suas respectivas datas.
 
-## Mapa da aplicação
+<h2 id="modelagem-mapa-aplicacao">Mapa da aplicação</h2>
 
 <img width="100%" src="./docs/models/pages.svg" />
 
@@ -74,7 +83,7 @@ A modelagem foi criada antes de iniciar o desenvolvimento da aplicação, com o 
 
 * **End** - Página que informa a finalização do pedido, a partir dessa página o usuário possui duas opções, ir para a página History ou fazer um novo pedido em Demand Information. 
 
-# :warning: Pré-requisitos
+<h1 id="requisitos">:warning: Pré-requisitos</h1>
 
 O desenvolvimento dessa aplicação utiliza como base as seguintes tecnologias e versões apresentadas abaixo. Caso ocorra algum erro na execução da aplicação ou mesmo nos comandos de configurações, verifique se a versão do Dart e do Flutter no seu computador estão devidamente atualizados.
 
@@ -82,8 +91,7 @@ O desenvolvimento dessa aplicação utiliza como base as seguintes tecnologias e
 2. Flutter 1.22.1 (stable)
 3. git version 2.17.1
 
-
-# :information_source: Instalação
+<h1 id="instalacao">:information_source: Instalação</h1>
 
 1.  Clone ou faça o download do repositório:
     ```bash
@@ -103,8 +111,7 @@ O desenvolvimento dessa aplicação utiliza como base as seguintes tecnologias e
     flutter run 
     ```
 
-
-## :heavy_check_mark: Funcionalidades
+<h2 id="funcionalidades">:heavy_check_mark: Funcionalidades</h2>
 - [x] Páginas de login;
 - [x] Página com lista de pedidos efetuados;
 - [x] Página de novos pedidos;
@@ -113,7 +120,7 @@ O desenvolvimento dessa aplicação utiliza como base as seguintes tecnologias e
 - [x] Página de adicionar informações ao pedido;
 - [x] Feedback do pedido realizado.
 
-# :iphone: Screenshots (All screenshots)
+<h2 id="screenshots">:iphone: Screenshots (All screenshots)</h2>
 
 ## Login
 
