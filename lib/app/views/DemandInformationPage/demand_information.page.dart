@@ -6,9 +6,9 @@ import 'package:maida_coffee_challenge/app/routes.dart';
 import 'package:maida_coffee_challenge/app/stores/demand_information.store.dart';
 import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
+import 'package:maida_coffee_challenge/app/views/DemandInformationPage/demand_forward_button.widget.dart';
+import 'package:maida_coffee_challenge/app/views/DemandInformationPage/demand_header.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/food_item_description.widget.dart';
-import 'package:maida_coffee_challenge/app/widgets/header_information.widget.dart';
-import 'package:maida_coffee_challenge/app/widgets/search_field.widget.dart';
 
 class DemandInformationPage extends StatefulWidget {
   @override
@@ -17,17 +17,11 @@ class DemandInformationPage extends StatefulWidget {
 
 class _DemandInformationPageState extends State<DemandInformationPage> {
   AppColor _color = AppColor();
-  AppString _string = AppString();
   DemandInformationStore _informationStore = DemandInformationStore();
   TextEditingController _txtSearch = TextEditingController();
 
   void _closePage() {
     Navigator.pop(context);
-  }
-
-  void _goToSelectProductPage() {
-    Navigator.pushNamed(context, AppRoute.LIST_CLIENTS_ROUTE,
-        arguments: _informationStore.demandOnRequest);
   }
 
   @override
@@ -49,26 +43,13 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _headerInformations(),
+                  DemandHeaderWidget(_informationStore, _txtSearch),
                   _foodListContainer(),
                 ],
               ),
             ),
           ),
-          _forwardButton(),
-        ],
-      ),
-    );
-  }
-  
-  Widget _headerInformations() {
-    return HeaderInformationWidget(
-      1,
-      _string.whatSelling,
-      child: Column(
-        children: [
-            SearchField(_txtSearch, _informationStore.searchFood),
-          SizedBox(height: 32),
+          DemandForwardButtonWidget(context, _informationStore),
         ],
       ),
     );
@@ -143,51 +124,5 @@ class _DemandInformationPageState extends State<DemandInformationPage> {
         );
       },
     );
-  }
-
-  Widget _forwardButton() {
-    if (_informationStore.demandOnRequest.foodList.length > 0) {
-      return GestureDetector(
-        child: Container(
-          padding: EdgeInsets.all(16),
-          color: _color.primaryColor,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${_string.total} ${_string.formatMoney(_informationStore.demandOnRequest.getDemandTotal())}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    '${_string.goForward}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        onTap: _goToSelectProductPage,
-      );
-    } else {
-      return Container();
-    }
   }
 }

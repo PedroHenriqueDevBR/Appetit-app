@@ -23,6 +23,13 @@ mixin _$ClientListStore on _ClientListStore, Store {
           Computed<int>(() => super.totalSelectedClients,
               name: '_ClientListStore.totalSelectedClients'))
       .value;
+  Computed<List<ClientStore>> _$getClientsComputed;
+
+  @override
+  List<ClientStore> get getClients => (_$getClientsComputed ??=
+          Computed<List<ClientStore>>(() => super.getClients,
+              name: '_ClientListStore.getClients'))
+      .value;
 
   final _$demandOnRequestAtom = Atom(name: '_ClientListStore.demandOnRequest');
 
@@ -80,7 +87,8 @@ mixin _$ClientListStore on _ClientListStore, Store {
     return '''
 demandOnRequest: ${demandOnRequest},
 enableButton: ${enableButton},
-totalSelectedClients: ${totalSelectedClients}
+totalSelectedClients: ${totalSelectedClients},
+getClients: ${getClients}
     ''';
   }
 }

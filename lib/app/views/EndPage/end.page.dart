@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:maida_coffee_challenge/app/routes.dart';
-import 'package:maida_coffee_challenge/app/utils/colors.utils.dart';
 import 'package:maida_coffee_challenge/app/utils/string.utils.dart';
 import 'package:maida_coffee_challenge/app/widgets/button.widget.dart';
 import 'package:maida_coffee_challenge/app/widgets/outline_button.widget.dart';
