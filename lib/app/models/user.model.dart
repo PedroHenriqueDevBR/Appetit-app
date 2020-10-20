@@ -21,6 +21,19 @@ class User {
         dates.add(demandDate);
       }
     }
+    return _orderDates(dates);
+  }
+
+  List<String> _orderDates(List<String> dates) {
+    dates.sort((String a, String b){
+      List<String> aSplited = a.split('/');
+      List<String> bSplited = b.split('/');
+      a = '${aSplited[2]}${aSplited[1]}${aSplited[0]}';
+      b = '${bSplited[2]}${bSplited[1]}${bSplited[0]}';
+      int intA = int.parse(a);
+      int intB = int.parse(b);
+      return intB.compareTo(intA);
+    });
     return dates;
   }
 
