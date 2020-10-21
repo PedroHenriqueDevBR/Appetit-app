@@ -93,23 +93,25 @@ O desenvolvimento dessa aplicação utiliza como base as seguintes tecnologias e
 
 <h1 id="instalacao">:information_source: Instalação</h1>
 
-1.  Clone ou faça o download do repositório:
-    ```bash
-    git clone https://github.com/PedroHenriqueDevBR/Appetit-app.git
-    ``` 
-2. Acesse a página da aplicação e execute o seguinte comando:
-    ```bash 
-    # Obter as dependências do projeto
-    flutter pub get 
-    ```
-    ```bash 
-    # Executar o MobX
-    flutter pub run build_runner build
-    ```
-    ```bash
-    # Executar o projeto
-    flutter run 
-    ```
+```bash
+# Execute o comando abaixo e clone o repositório do projeto
+git clone https://github.com/PedroHenriqueDevBR/Appetit-app.git
+
+# Acesse o projeto
+cd Appetit-app
+
+# Execute o comanmdo para obter as dependências do projeto
+flutter pub get 
+
+# Execute o seguinte comando para construir as classes do MobX
+flutter pub run build_runner build
+
+# Se o comando anterior apresentar uma mensagem de erro execute o comando abaixo, e em seguite execute o comando anterior novamente
+flutter pub run build_runner build --delete-conflicting-outputs
+
+# Por fim, para executar o projeto execute o comando abaixo
+flutter run 
+```
 
 <h2 id="funcionalidades">:heavy_check_mark: Funcionalidades</h2>
 - [x] Páginas de login;
