@@ -12,7 +12,6 @@ class DashboardHeaderInformationWidget extends StatelessWidget {
   DemandHistoryStore _historyStore;
   TextEditingController _txtSearch;
 
-
   DashboardHeaderInformationWidget(this._historyStore, this._txtSearch);
 
   @override
@@ -21,7 +20,7 @@ class DashboardHeaderInformationWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${_string.hello}, ${_historyStore.user.name}',
+          '${_string.hello} ${_historyStore.user.name}',
           style: TextStyle(
             fontSize: 24,
             color: _color.primaryDarkColor,
