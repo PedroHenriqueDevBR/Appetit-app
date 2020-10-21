@@ -106,7 +106,8 @@ flutter pub get
 # Execute o seguinte comando para construir as classes do MobX
 flutter pub run build_runner build
 
-# Se o comando anterior apresentar uma mensagem de erro execute o comando abaixo, e em seguite execute o comando anterior novamente
+# Se o comando anterior apresentar uma mensagem de erro execute
+# o comando abaixo, e em seguite execute o comando anterior novamente
 flutter pub run build_runner build --delete-conflicting-outputs
 
 # Por fim, para executar o projeto execute o comando abaixo
