@@ -45,7 +45,7 @@ A modelagem foi criada antes de iniciar o desenvolvimento da aplicação, com o 
 
 <h2 id="modelagem-classes">Modelagem das classes</h2>
 
-<img width="100%" src="./docs/models/project-modeling.png" />
+<img width="100%" src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/models/project-modeling.png" />
 
 ### Descrição das classes
 
@@ -65,7 +65,7 @@ A modelagem foi criada antes de iniciar o desenvolvimento da aplicação, com o 
 
 <h2 id="modelagem-mapa-aplicacao">Mapa da aplicação</h2>
 
-<img width="100%" src="./docs/models/pages.svg" />
+<img width="100%" src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/models/pages.svg" />
 
 ### Descrição das páginas
 
@@ -128,45 +128,45 @@ flutter run
 ## Login
 
 <div>
-<img src="./docs/screenshots/login-01.png" width="210" />
-<img src="./docs/screenshots/login-02.png" width="210" />
-<img src="./docs/screenshots/login-03.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/login-01.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/login-02.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/login-03.png" width="210" />
 </div>
 
 ## History
 <div>
-<img src="./docs/screenshots/history-01.png" width="210" />
-<img src="./docs/screenshots/history-02.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/history-01.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/history-02.png" width="210" />
 </div>
 
 ## Demand information
 <div>
-<img src="./docs/screenshots/demand-informatio-01.png" width="210" />
-<img src="./docs/screenshots/demand-informatio-02.png" width="210" />
-<img src="./docs/screenshots/demand-informatio-03.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/demand-informatio-01.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/demand-informatio-02.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/demand-informatio-03.png" width="210" />
 </div>
 
 ## Select product
 <div>
-<img src="./docs/screenshots/select-food-01.png" width="210" />
-<img src="./docs/screenshots/select-food-02.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/select-food-01.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/select-food-02.png" width="210" />
 </div>
 
 ## Client List
 <div>
-<img src="./docs/screenshots/client-list-01.png" width="210" />
-<img src="./docs/screenshots/client-list-02.png" width="210" />
-<img src="./docs/screenshots/client-list-03.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/client-list-01.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/client-list-02.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/client-list-03.png" width="210" />
 </div>
 
 ## Demand Status
 <div>
-<img src="./docs/screenshots/demand-status-01.png" width="210" />
-<img src="./docs/screenshots/demand-status-02.png" width="210" />
-<img src="./docs/screenshots/demand-status-03.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/demand-status-01.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/demand-status-02.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/demand-status-03.png" width="210" />
 </div>
 
 ## End
 <div>
-<img src="./docs/screenshots/end.png" width="210" />
+<img src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/screenshots/end.png" width="210" />
 </div>
