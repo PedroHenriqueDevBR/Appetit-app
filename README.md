@@ -1,6 +1,6 @@
 
 <h1  align="center">
-<img width="200" src="./docs/assets/app_logo.png" /><br>
+<img width="200" src="https://raw.githubusercontent.com/PedroHenriqueDevBR/Appetit-app/main/docs/assets/app_logo.png" /><br>
 </h1>
 
 <h3 align="center">
